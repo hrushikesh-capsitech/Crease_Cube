@@ -31,8 +31,7 @@ public class PlatformScript : MonoBehaviour
             if((maxX.x - insCube.transform.position.x) < 0.3f)
             {
                 readyToMove = false;
-                GameObject currCube = CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1];
-                CubeSpawner.Instance.ActiveCube.transform.position = new Vector3(currCube.transform.position.x, 1.1f, 0f);
+                
                 GameManager.Instance.MoveToNextCube();
             }
         }
