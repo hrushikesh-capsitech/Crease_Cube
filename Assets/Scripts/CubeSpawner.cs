@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class CubeSpawner : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
 
     public static CubeSpawner Instance;
     [SerializeField] private GameObject cubePrefab;

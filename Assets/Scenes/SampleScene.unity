@@ -206,7 +206,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.14842184, y: -0.23713268, z: 0.03668618, w: 0.95937127}
-  m_LocalPosition: {x: 4, y: 4, z: -6}
+  m_LocalPosition: {x: 4, y: 3, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CubeSpawner: {fileID: 847739597}
+  tolerance: 0.5
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0

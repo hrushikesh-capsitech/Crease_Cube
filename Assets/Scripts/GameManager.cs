@@ -1,8 +1,9 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
 
     public static GameManager Instance;
 
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviour
         main  = Camera.main;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         
@@ -42,9 +43,17 @@ public class GameManager : MonoBehaviour
         if (CubeSpawner.GetComponent<CubeSpawner>() != null)
         {
             currCube.GetComponent<PlatformGenerator>().isActive = true;
-            float distance = Vector3.Distance(main.transform.position, currCube.transform.position);
-            main.transform.position = new Vector3(currCube.transform.position.x + 4f + tolerance, 4f, -6f);
+
+            //main.transform.position = new Vector3(currCube.transform.position.x + 3f + tolerance, 4f, -6f);
+
+            main.transform.DOMove(new Vector3(currCube.transform.position.x + 4f + tolerance, 3f, -6f), 0.5f).SetEase(Ease.InOutSine);
         }
 
+        for (int i = 0; i< CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes.Count - 5; i++)
+        {
+            
+                Destroy(CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[i]);
+            
+        }
     }
 }

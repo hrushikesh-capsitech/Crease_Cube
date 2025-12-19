@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlatformGenerator : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     [SerializeField] private GameObject PlatformPrefab;
 
@@ -19,7 +18,6 @@ public class PlatformGenerator : MonoBehaviour
         startScale = PlatformPrefab.transform.localScale;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!isActive) return;
