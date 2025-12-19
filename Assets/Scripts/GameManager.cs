@@ -6,7 +6,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
-    private int CurrActiveCubeIndx = -1;
+    public int CurrActiveCubeIndx = -1;
+    public int prevActiveCubeIndx = -1;
 
     [SerializeField] private GameObject CubeSpawner;
     [SerializeField] private float tolerance = 0.5f;
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         CubeSpawner.GetComponent<CubeSpawner>().SpawnFirstPos();
         CurrActiveCubeIndx = 0;
+        prevActiveCubeIndx = 0;
         main  = Camera.main;
     }
 
@@ -32,19 +34,33 @@ public class GameManager : MonoBehaviour
         CubeSpawner.GetComponent<CubeSpawner>().SpawnCube();
 
         GameObject prevCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
+        prevActiveCubeIndx = CurrActiveCubeIndx;
         CurrActiveCubeIndx++;
         GameObject currCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
         if (CubeSpawner.GetComponent<CubeSpawner>() != null)
         {
-            prevCube.GetComponent<PlatformGenerator>().DisablePlatform();
+          prevCube.GetComponent<PlatformGenerator>().DisablePlatform();
         }
-        
+       
         if (CubeSpawner.GetComponent<CubeSpawner>() != null)
         {
-            currCube.GetComponent<PlatformGenerator>().isActive = true;
-            float distance = Vector3.Distance(main.transform.position, currCube.transform.position);
+           currCube.GetComponent<PlatformGenerator>().isActive = true;
+          float distance = Vector3.Distance(main.transform.position, currCube.transform.position);
             main.transform.position = new Vector3(currCube.transform.position.x + 4f + tolerance, 4f, -6f);
         }
+        CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.position = new Vector3(currCube.transform.position.x, 1.1f, 0f);
 
+    }
+
+    public void MoveCubeAlongtheSlide()
+    {
+        GameObject prevCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
+        PlatformScript pc = prevCube.GetComponent<PlatformGenerator>()
+           .PlatformPrefab.GetComponent<PlatformScript>();
+        if (pc != null)
+        {
+            pc.MoveCubeAlongLen();
+        }
+       // MoveToNextCube();
     }
 }

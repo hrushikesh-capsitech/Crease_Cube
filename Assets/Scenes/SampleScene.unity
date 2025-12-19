@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CubeSpawner: {fileID: 847739597}
+  tolerance: 2
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0

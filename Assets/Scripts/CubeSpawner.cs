@@ -12,9 +12,10 @@ public class CubeSpawner : MonoBehaviour
     public static CubeSpawner Instance;
     [SerializeField] private GameObject cubePrefab;
 
+    [SerializeField] private GameObject cubeMovePrefab;
     public List<GameObject> spawnedCubes = new List<GameObject>();
 
-
+    public GameObject ActiveCube;
     void Start()
     {
         Instance = this;
@@ -33,7 +34,9 @@ public class CubeSpawner : MonoBehaviour
     public void SpawnFirstPos()
     {
         GameObject newCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
-
+       GameObject cube = Instantiate(cubeMovePrefab, new Vector3(0f,1.1f,0f), Quaternion.identity);
+        cube.transform.parent = newCube.transform;
+        ActiveCube = cube;
         spawnedCubes.Add(newCube);
         newCube.GetComponent<PlatformGenerator>().isActive = true;
         SpawnCube();

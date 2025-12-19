@@ -4,7 +4,7 @@ public class PlatformGenerator : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    [SerializeField] private GameObject PlatformPrefab;
+    [SerializeField] public GameObject PlatformPrefab;
 
     [SerializeField] private GameObject SpawnPoint;
 

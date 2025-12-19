@@ -16,6 +16,6 @@ public class CubeScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GameManager.Instance.MoveToNextCube();
+       if(other.gameObject.CompareTag("platform")) GameManager.Instance.MoveCubeAlongtheSlide();
     }
 }
