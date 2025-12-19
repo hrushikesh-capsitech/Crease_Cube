@@ -1,13 +1,13 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
 
     public static GameManager Instance;
 
-    public int CurrActiveCubeIndx = -1;
-    public int prevActiveCubeIndx = -1;
+    private int CurrActiveCubeIndx = -1;
 
     [SerializeField] private GameObject CubeSpawner;
     [SerializeField] private float tolerance = 0.5f;
@@ -19,11 +19,10 @@ public class GameManager : MonoBehaviour
         Instance = this;
         CubeSpawner.GetComponent<CubeSpawner>().SpawnFirstPos();
         CurrActiveCubeIndx = 0;
-        prevActiveCubeIndx = 0;
         main  = Camera.main;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         
@@ -34,33 +33,27 @@ public class GameManager : MonoBehaviour
         CubeSpawner.GetComponent<CubeSpawner>().SpawnCube();
 
         GameObject prevCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
-        prevActiveCubeIndx = CurrActiveCubeIndx;
         CurrActiveCubeIndx++;
         GameObject currCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
         if (CubeSpawner.GetComponent<CubeSpawner>() != null)
         {
-          prevCube.GetComponent<PlatformGenerator>().DisablePlatform();
+            prevCube.GetComponent<PlatformGenerator>().DisablePlatform();
         }
-       
+        
         if (CubeSpawner.GetComponent<CubeSpawner>() != null)
         {
-           currCube.GetComponent<PlatformGenerator>().isActive = true;
-          float distance = Vector3.Distance(main.transform.position, currCube.transform.position);
-            main.transform.position = new Vector3(currCube.transform.position.x + 4f + tolerance, 4f, -6f);
+            currCube.GetComponent<PlatformGenerator>().isActive = true;
+
+            //main.transform.position = new Vector3(currCube.transform.position.x + 3f + tolerance, 4f, -6f);
+
+            main.transform.DOMove(new Vector3(currCube.transform.position.x + 4f + tolerance, 3f, -6f), 0.5f).SetEase(Ease.InOutSine);
         }
-        CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.position = new Vector3(currCube.transform.position.x, 1.1f, 0f);
 
-    }
-
-    public void MoveCubeAlongtheSlide()
-    {
-        GameObject prevCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
-        PlatformScript pc = prevCube.GetComponent<PlatformGenerator>()
-           .PlatformPrefab.GetComponent<PlatformScript>();
-        if (pc != null)
+        for (int i = 0; i< CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes.Count - 5; i++)
         {
-            pc.MoveCubeAlongLen();
+            
+                Destroy(CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[i]);
+            
         }
-       // MoveToNextCube();
     }
 }

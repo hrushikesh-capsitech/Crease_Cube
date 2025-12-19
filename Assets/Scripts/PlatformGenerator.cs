@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlatformGenerator : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     [SerializeField] public GameObject PlatformPrefab;
 
@@ -12,32 +11,34 @@ public class PlatformGenerator : MonoBehaviour
     [SerializeField] private float maxHeight = 4f;
 
     private Vector3 startScale;
-    private bool isPressedDown = false;
-    public bool isActive = false;
+    private bool isGrowing = false;
+    private bool isReleased = false;
+
+    public bool isActive = true;
     void Start()
     {
         startScale = PlatformPrefab.transform.localScale;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (!isActive) return;
+        if (!isActive || isReleased) return;
 
         if (Input.GetMouseButtonDown(0))
         {
-                isPressedDown = true;
+                isGrowing = true;
         }
 
-        if (isPressedDown)
+        if (isGrowing)
         {
             PlatformPrefab.SetActive(true);
             GrowPlatFormSize();
         }
 
-        if (Input.GetMouseButtonUp(0) && isPressedDown)
+        if (Input.GetMouseButtonUp(0) && isGrowing)
         {
-            isPressedDown = false;
+            isGrowing = false;
+            isReleased = true;
             ReleasePlatform();
         }
     }
