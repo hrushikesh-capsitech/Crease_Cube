@@ -5,6 +5,8 @@ public class PlatformGenerator : MonoBehaviour
 
     [SerializeField] public GameObject PlatformPrefab;
 
+    [SerializeField] private GameObject platFormPrefabFromAssets;
+
     [SerializeField] private GameObject SpawnPoint;
 
     [SerializeField] private float growSpeed = 2f;
@@ -13,11 +15,14 @@ public class PlatformGenerator : MonoBehaviour
     private Vector3 startScale;
     private bool isGrowing = false;
     private bool isReleased = false;
-
+    private Vector3 firstScale;
+    private Vector3 firstPos;
     public bool isActive = true;
     void Start()
     {
         startScale = PlatformPrefab.transform.localScale;
+        firstPos = PlatformPrefab.transform.localPosition;
+       // PlatFormPrefabAtStart = Instantiate(PlatformPrefab);
     }
 
     void Update()
@@ -81,5 +86,27 @@ public class PlatformGenerator : MonoBehaviour
             rb.useGravity = true;
         }
         rb.AddForce(new Vector3(2f,0f,0f),ForceMode.Impulse);
+    }
+
+    public void SpawnForAnim(float time)
+    {
+        Debug.Log("Enter to spawn platform");
+        float timeInSec = time;
+        while (timeInSec > 0f)
+        {
+            GrowPlatFormSize();
+            timeInSec -= Time.deltaTime;
+
+        }
+        ReleasePlatform();
+    }
+
+    public void ResetPlatform()
+    {
+        if(PlatformPrefab != null)
+        {
+            Destroy(PlatformPrefab);
+        }
+        PlatformPrefab = Instantiate(platFormPrefabFromAssets, platFormPrefabFromAssets.transform.position, platFormPrefabFromAssets.transform.rotation,transform);
     }
 }

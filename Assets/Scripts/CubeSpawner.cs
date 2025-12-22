@@ -41,8 +41,7 @@ public class CubeSpawner : MonoBehaviour
         newCube.GetComponent<PlatformGenerator>().isActive = true;
         SpawnCube();
     }
-
-    public void SpawnCube()
+ public void SpawnCube()
     {
         if (cubePrefab == null)
             return;
@@ -56,7 +55,7 @@ public class CubeSpawner : MonoBehaviour
  
         }
  
-        float maxX = minX + 5f;
+        float maxX = minX + 3f;
  
         Vector3 spawnPosition = new Vector3(Random.Range(minX, maxX), 0f, 0f);
  
@@ -64,6 +63,7 @@ public class CubeSpawner : MonoBehaviour
  
         spawnedCubes.Add(newCube);
     }
+   
 }
 
 
