@@ -21,16 +21,6 @@ public class CubeSpawner : MonoBehaviour
         Instance = this;
     }
 
-
-    IEnumerator SpawnRoutine()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(3f);
-            SpawnCube();
-        }
-    }
-
     public void SpawnFirstPos()
     {
         GameObject newCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);

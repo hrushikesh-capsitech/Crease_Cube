@@ -1,5 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +16,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float tolerance = 0.5f;
 
     private Camera main;
+
+    private Coroutine failRoutine;
+
+    [SerializeField] private Button restartButton;
 
     void Start()
     {
@@ -69,6 +75,66 @@ public class GameManager : MonoBehaviour
         {
             pc.MoveCubeAlongLen();
         }
-        // MoveToNextCube();
+        
     }
+
+
+    public void GameOver()
+    {
+        Debug.Log("Game Over");
+        Time.timeScale = 0f;
+        restartButton.gameObject.SetActive(true);
+    }
+
+    public void StartFailCheck(float delay)
+    {
+        if (failRoutine != null)
+        {
+            StopCoroutine(failRoutine);
+        }
+        failRoutine = StartCoroutine(FailAfterDelay(delay));
+    }
+
+
+    IEnumerator FailAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        GameOver();
+    }
+
+
+    public void CancelFailCheck()
+    {
+        if (failRoutine != null)
+        {
+            StopCoroutine(failRoutine);
+            failRoutine = null;
+        }
+    }
+
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        restartButton.gameObject.SetActive(false);
+
+        CurrActiveCubeIndx = -1;
+        prevActiveCubeIndx = -1;
+
+        main.transform.DOMove(new Vector3(4f, 3f, -6f), 0.5f);
+
+        foreach (GameObject cube in CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes)
+        {
+            Destroy(cube);
+        }
+
+        CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes.Clear();
+
+        CubeSpawner.GetComponent<CubeSpawner>().SpawnFirstPos();
+
+        CurrActiveCubeIndx = 0;
+        prevActiveCubeIndx = 0;
+
+    }
+
 }
