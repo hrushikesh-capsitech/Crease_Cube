@@ -7,10 +7,12 @@ public class PlatformGenerator : MonoBehaviour
 
     [SerializeField] private GameObject platFormPrefabFromAssets;
 
-    [SerializeField] private GameObject SpawnPoint;
+    public GameObject SpawnPoint;
 
     [SerializeField] private float growSpeed = 2f;
     [SerializeField] private float maxHeight = 4f;
+
+
 
     private Vector3 startScale;
     private bool isGrowing = false;
@@ -89,6 +91,7 @@ public class PlatformGenerator : MonoBehaviour
 
 
        if(GameManager.Instance != null) GameManager.Instance.StartFailCheck(2f);
+
     }
 
     public void SpawnForAnim(float time)

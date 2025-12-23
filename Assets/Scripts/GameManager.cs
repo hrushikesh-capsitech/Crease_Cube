@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Button restartButton;
 
+
     void Start()
     {
         Instance = this;
@@ -40,11 +41,14 @@ public class GameManager : MonoBehaviour
     public void MoveToNextCube()
     {
         CubeSpawner.GetComponent<CubeSpawner>().SpawnCube();
+        ScoreManager.Instance.AddScore();
 
         GameObject prevCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
         prevActiveCubeIndx = CurrActiveCubeIndx;
         CurrActiveCubeIndx++;
         GameObject currCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
+
+
         if (CubeSpawner.GetComponent<CubeSpawner>() != null)
         {
             prevCube.GetComponent<PlatformGenerator>().DisablePlatform();
@@ -137,5 +141,6 @@ public class GameManager : MonoBehaviour
         prevActiveCubeIndx = 0;
 
     }
+
 
 }
