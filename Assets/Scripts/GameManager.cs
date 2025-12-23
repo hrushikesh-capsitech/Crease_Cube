@@ -1,5 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +17,10 @@ public class GameManager : MonoBehaviour
 
     private Camera main;
 
+    private Coroutine failRoutine;
+
+    [SerializeField] private Button restartButton;
+
     void Start()
     {
         Instance = this;
@@ -22,6 +28,7 @@ public class GameManager : MonoBehaviour
         CurrActiveCubeIndx = 0;
         prevActiveCubeIndx = 0;
         main  = Camera.main;
+        main.transform.position = new Vector3(4f, 3f, -6f);
     }
 
 
@@ -49,7 +56,7 @@ public class GameManager : MonoBehaviour
 
             //main.transform.position = new Vector3(currCube.transform.position.x + 3f + tolerance, 4f, -6f);
 
-            main.transform.DOMove(new Vector3(currCube.transform.position.x + 4f + tolerance, 3f, -6f), 0.5f).SetEase(Ease.InOutSine);
+            main.transform.DOMove(new Vector3(currCube.transform.position.x + 4f + tolerance, 3f, -6f), 0.8f).SetEase(Ease.InOutSine);
         }
         CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.position = new Vector3(currCube.transform.position.x, 1.1f, 0f);
         CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.parent = currCube.transform;
@@ -69,6 +76,66 @@ public class GameManager : MonoBehaviour
         {
             pc.MoveCubeAlongLen();
         }
-        // MoveToNextCube();
+        
     }
+
+
+    public void GameOver()
+    {
+        Debug.Log("Game Over");
+        Time.timeScale = 0f;
+        AppStateManager.Instance.SetGameOver();
+    }
+
+    public void StartFailCheck(float delay)
+    {
+        if (failRoutine != null)
+        {
+            StopCoroutine(failRoutine);
+        }
+        failRoutine = StartCoroutine(FailAfterDelay(delay));
+    }
+
+
+    IEnumerator FailAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        GameOver();
+    }
+
+
+    public void CancelFailCheck()
+    {
+        if (failRoutine != null)
+        {
+            StopCoroutine(failRoutine);
+            failRoutine = null;
+        }
+    }
+
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        AppStateManager.Instance.SetGameplay();
+
+        CurrActiveCubeIndx = -1;
+        prevActiveCubeIndx = -1;
+
+        main.transform.DOMove(new Vector3(4f, 3f, -6f), 0.8f);
+
+        foreach (GameObject cube in CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes)
+        {
+            Destroy(cube);
+        }
+
+        CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes.Clear();
+
+        CubeSpawner.GetComponent<CubeSpawner>().SpawnFirstPos();
+
+        CurrActiveCubeIndx = 0;
+        prevActiveCubeIndx = 0;
+
+    }
+
 }

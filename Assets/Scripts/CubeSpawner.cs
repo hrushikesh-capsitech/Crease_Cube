@@ -21,20 +21,10 @@ public class CubeSpawner : MonoBehaviour
         Instance = this;
     }
 
-
-    IEnumerator SpawnRoutine()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(3f);
-            SpawnCube();
-        }
-    }
-
     public void SpawnFirstPos()
     {
-        GameObject newCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
-       GameObject cube = Instantiate(cubeMovePrefab, new Vector3(0f,1.1f,0f), Quaternion.identity);
+        GameObject newCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity,transform);
+       GameObject cube = Instantiate(cubeMovePrefab, new Vector3(0f,1.1f,0f), Quaternion.identity,transform);
         cube.transform.parent = newCube.transform;
         ActiveCube = cube;
         spawnedCubes.Add(newCube);
@@ -59,7 +49,7 @@ public class CubeSpawner : MonoBehaviour
  
         Vector3 spawnPosition = new Vector3(Random.Range(minX, maxX), 0f, 0f);
  
-        GameObject newCube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity);
+        GameObject newCube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity,transform);
  
         spawnedCubes.Add(newCube);
     }

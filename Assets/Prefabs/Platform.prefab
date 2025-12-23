@@ -190,4 +190,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cube: {fileID: 6055716350852146520, guid: 0777fe7cf2d318d4182b1955337b00c9, type: 3}
-  Speed: 0.08
+  Speed: 5

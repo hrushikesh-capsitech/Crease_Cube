@@ -23,7 +23,6 @@ public class PlatformAnim : MonoBehaviour
     {
         if (readyToMove)
         {
-            Debug.Log("Entered into the update func");
             insCube.transform.position += new Vector3(0.06f, 0f, 0f);
 
             if ((maxX.x - insCube.transform.position.x) < 0.2f)

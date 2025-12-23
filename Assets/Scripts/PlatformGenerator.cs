@@ -86,6 +86,9 @@ public class PlatformGenerator : MonoBehaviour
             rb.useGravity = true;
         }
         rb.AddForce(new Vector3(2f,0f,0f),ForceMode.Impulse);
+
+
+       if(GameManager.Instance != null) GameManager.Instance.StartFailCheck(2f);
     }
 
     public void SpawnForAnim(float time)

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlatformScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
 
     private Vector3 minX;
@@ -10,7 +9,7 @@ public class PlatformScript : MonoBehaviour
     [SerializeField] private GameObject Cube;
 
     private bool readyToMove = false;
-    [SerializeField] private float Speed = 1f;
+    [SerializeField] private float Speed = 5f;
 
     private BoxCollider boxCollider;
 
@@ -36,7 +35,7 @@ public class PlatformScript : MonoBehaviour
             }
         }
     }
-
+     
     public void MoveCubeAlongLen()
     {
         boxCollider  = gameObject.GetComponent<BoxCollider>();

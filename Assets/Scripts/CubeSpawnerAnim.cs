@@ -71,7 +71,7 @@ public class CubeSpawnerAnim : MonoBehaviour
 
         Vector3 spawnPosition = new Vector3(3f, 1f, 0f);
 
-        GameObject newCube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity);
+        GameObject newCube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity,transform);
 
         secondCube = newCube;
         secondCubePos = secondCube.transform.position;
