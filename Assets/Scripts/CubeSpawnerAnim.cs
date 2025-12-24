@@ -61,7 +61,6 @@ public class CubeSpawnerAnim : MonoBehaviour
             GameObject temp = firstCube;
             firstCube = secondCube;
             secondCube = temp;
-            ActiveCube.transform.parent = secondCube.transform;
 
     }
     public void SpawnCube()
@@ -87,6 +86,7 @@ public class CubeSpawnerAnim : MonoBehaviour
     {
 
         firstCube.SetActive(false);
+        ActiveCube.transform.parent = secondCube.transform;
         isMoving = true;
         
     }

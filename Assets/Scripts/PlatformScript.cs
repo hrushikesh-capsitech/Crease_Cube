@@ -25,7 +25,7 @@ public class PlatformScript : MonoBehaviour
         if (readyToMove)
         {
             Debug.Log("Entered into the update func");
-            insCube.transform.position += new Vector3(0.06f, 0f, 0f);
+            insCube.transform.position += new Vector3(0.08f, 0f, 0f);
             
             if (CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.x < insCube.transform.position.x)
             {
