@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlatformScript : MonoBehaviour
@@ -9,36 +10,52 @@ public class PlatformScript : MonoBehaviour
     [SerializeField] private GameObject Cube;
 
     private bool readyToMove = false;
-    [SerializeField] private float Speed = 5f;
+    [SerializeField] private float Speed = 1f;
 
     private BoxCollider boxCollider;
 
     private GameObject insCube;
+
+    private float insCubeOriginalY;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (readyToMove)
         {
-            Debug.Log("Entered into the update func");
-            insCube.transform.position += new Vector3(0.08f, 0f, 0f);
+            insCube.transform.position += new Vector3(0.09f, 0f, 0f);
             
-            if (CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.x < insCube.transform.position.x)
+            if ((CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.x + 0.1f) < insCube.transform.position.x)
             {
-                readyToMove = false;
-                GameManager.Instance.GameOver();
+                Debug.Log("Adding RigidBody and Force to cube");
+                insCube.AddComponent<Rigidbody>();
+                Rigidbody rb = insCube.GetComponent<Rigidbody>();
+
+                rb.AddForce(new Vector3(Speed * 0.5f, 0f, 0f), ForceMode.Force);
+
+
+                if ((insCubeOriginalY - insCube.transform.position.y) > 0.5f )
+                {
+                    Debug.Log("insCubeOriginalY : " + insCubeOriginalY);
+                    Invoke(nameof(gameOverFunc), 0.5f);
+                }
+
             }
 
-            if ((maxX.x - insCube.transform.position.x) < 0.1f)
-            {
-                readyToMove = false;
 
-                GameManager.Instance.MoveToNextCube();
+            if (maxX.x <= CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.x)
+            {
+                if ((maxX.x - insCube.transform.position.x) < 0.1f)
+                {
+                    readyToMove = false;
+
+                    GameManager.Instance.MoveToNextCube();
+                }
             }
+            
         }
     }
      
@@ -48,13 +65,23 @@ public class PlatformScript : MonoBehaviour
         Bounds bounds = boxCollider.bounds;
         minX = bounds.min;
         maxX = bounds.max;
-      // insCube = Instantiate(Cube,new Vector3(bounds.min.x,bounds.min.y +0.46f,0f),Quaternion.identity);
+
         if(CubeSpawner.Instance.ActiveCube != null)
         {
             insCube = CubeSpawner.Instance.ActiveCube;
             insCube.transform.position = new Vector3(bounds.min.x, bounds.min.y + 0.46f, 0f);
+
+            insCubeOriginalY = insCube.transform.position.y;
         }
         readyToMove = true;
         Debug.Log("bounds are" + minX + ", " + maxX);
+    }
+
+
+
+    void gameOverFunc()
+    {
+        readyToMove = false;
+        GameManager.Instance.GameOver();
     }
 }
