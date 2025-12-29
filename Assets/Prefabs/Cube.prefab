@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c42fab593c064145b7fa6bdae114f79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitParticlePrefab: {fileID: 195466, guid: 56c3274d2f9ec214ab584a80b5ce2d6d, type: 3}
 --- !u!1 &6842397076012033515
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,6 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlatformPrefab: {fileID: 8160533668251220485}
+  platFormPrefabFromAssets: {fileID: 0}
   SpawnPoint: {fileID: 6842397076012033515}
   growSpeed: 2
   maxHeight: 10

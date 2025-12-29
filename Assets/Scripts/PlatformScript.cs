@@ -30,7 +30,6 @@ public class PlatformScript : MonoBehaviour
             
             if ((CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.x + 0.1f) < insCube.transform.position.x)
             {
-                Debug.Log("Adding RigidBody and Force to cube");
                 insCube.AddComponent<Rigidbody>();
                 Rigidbody rb = insCube.GetComponent<Rigidbody>();
 
@@ -39,7 +38,6 @@ public class PlatformScript : MonoBehaviour
 
                 if ((insCubeOriginalY - insCube.transform.position.y) > 0.5f )
                 {
-                    Debug.Log("insCubeOriginalY : " + insCubeOriginalY);
                     Invoke(nameof(gameOverFunc), 0.5f);
                 }
 
@@ -74,7 +72,6 @@ public class PlatformScript : MonoBehaviour
             insCubeOriginalY = insCube.transform.position.y;
         }
         readyToMove = true;
-        Debug.Log("bounds are" + minX + ", " + maxX);
     }
 
 
