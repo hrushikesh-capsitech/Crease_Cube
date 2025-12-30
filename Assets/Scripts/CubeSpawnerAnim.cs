@@ -31,7 +31,7 @@ public class CubeSpawnerAnim : MonoBehaviour
     {
         if (isMoving)
         {
-            secondCube.transform.position += new Vector3(-0.06f, 0f, 0f);
+            secondCube.transform.position += new Vector3(-0.07f, 0f, 0f);
             if ((secondCube.transform.position.x - firstCubePos.x) < 0.2f)
             {
                 isMoving = false;

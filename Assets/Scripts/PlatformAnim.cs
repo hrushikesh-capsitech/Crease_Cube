@@ -23,7 +23,7 @@ public class PlatformAnim : MonoBehaviour
     {
         if (readyToMove)
         {
-            insCube.transform.position += new Vector3(0.09f, 0f, 0f);
+            insCube.transform.position += new Vector3(0.25f, 0f, 0f);
 
             if ((maxX.x - insCube.transform.position.x) < 0.2f)
             {

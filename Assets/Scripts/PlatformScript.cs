@@ -26,7 +26,7 @@ public class PlatformScript : MonoBehaviour
     {
         if (readyToMove)
         {
-            insCube.transform.position += new Vector3(0.09f, 0f, 0f);
+            insCube.transform.position += new Vector3(0.18f, 0f, 0f);
             
             if ((CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.x + 0.1f) < insCube.transform.position.x)
             {
@@ -71,10 +71,15 @@ public class PlatformScript : MonoBehaviour
 
             insCubeOriginalY = insCube.transform.position.y;
         }
+        //Invoke(nameof(readyFunc), 0.1f);
+
         readyToMove = true;
     }
 
-
+    void readyFunc()
+    {
+               readyToMove = true;
+    }
 
     void gameOverFunc()
     {

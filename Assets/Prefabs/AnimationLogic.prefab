@@ -60,6 +60,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 3823727102458612516}
     m_Modifications:
     - target: {fileID: 354585620705768149, guid: 13d4d0dc227c6c745a1e5cea59f0f86f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 354585620705768149, guid: 13d4d0dc227c6c745a1e5cea59f0f86f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.457
       objectReference: {fileID: 0}
@@ -202,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1c25b5d067521e48b0fca3a383a6f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitParticlePrefab: {fileID: 195466, guid: 56c3274d2f9ec214ab584a80b5ce2d6d, type: 3}
+  hitParticlePrefab: {fileID: 195466, guid: cbd9edce014106a43b331618c37f0227, type: 3}
 --- !u!4 &9174495855533449301 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6825954960464805106, guid: 13d4d0dc227c6c745a1e5cea59f0f86f, type: 3}

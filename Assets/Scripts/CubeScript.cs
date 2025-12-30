@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CubeScript : MonoBehaviour
@@ -5,17 +6,31 @@ public class CubeScript : MonoBehaviour
 
     [SerializeField] private GameObject hitParticlePrefab;
 
+    private bool soundLocked = false;
+
     private void OnTriggerEnter(Collider other)
     {
        if(other.gameObject.CompareTag("platform"))
         {
-            SoundManager.Instance.PlaySound(SoundManager.Instance.plankHitClip);
+            if (!soundLocked)
+            {
+                SoundManager.Instance.PlaySound(SoundManager.Instance.plankHitClip);
+                StartCoroutine(LockSoundFor(0.1f));
+            }
+
             SpawnParticles(other);
             GameManager.Instance.MoveCubeAlongtheSlide();
             GameManager.Instance.CancelFailCheck();
 
         }
             
+    }
+
+    IEnumerator LockSoundFor (float sec)
+    {
+        soundLocked = true;
+        yield return new WaitForSeconds(sec);
+        soundLocked = false;
     }
 
 

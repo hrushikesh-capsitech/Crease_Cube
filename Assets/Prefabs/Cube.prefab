@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c42fab593c064145b7fa6bdae114f79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitParticlePrefab: {fileID: 195466, guid: 56c3274d2f9ec214ab584a80b5ce2d6d, type: 3}
+  hitParticlePrefab: {fileID: 195466, guid: cbd9edce014106a43b331618c37f0227, type: 3}
 --- !u!1 &6842397076012033515
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +168,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 0e49b0b9994a1b0419d133354ccc1809, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
