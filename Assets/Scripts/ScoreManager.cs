@@ -7,7 +7,8 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance;
     [SerializeField] private TextMeshProUGUI scoreText;
 
-    private int score;
+
+    public int score;
     void Start()
     {
         Instance = this;
@@ -24,4 +25,5 @@ public class ScoreManager : MonoBehaviour
         score += 1;
         scoreText.text = score.ToString();
     }
+
 }

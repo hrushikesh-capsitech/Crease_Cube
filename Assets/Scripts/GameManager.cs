@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Over");
         Time.timeScale = 0f;
         AppStateManager.Instance.SetGameOver();
+        GameOverScore.Instance.GameOverScores();
     }
 
     public void StartFailCheck(float delay)
