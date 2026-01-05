@@ -105,6 +105,13 @@ public class GameManager : MonoBehaviour
     IEnumerator FailAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
+        GameObject prevCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
+       HingeJoint hg = prevCube.GetComponent<PlatformGenerator>()
+           .PlatformPrefab.GetComponent<HingeJoint>();
+
+        Destroy(hg);
+
+        yield return new WaitForSeconds(1f);
         GameOver();
     }
 
