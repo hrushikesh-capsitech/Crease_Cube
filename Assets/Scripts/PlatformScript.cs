@@ -35,6 +35,10 @@ public class PlatformScript : MonoBehaviour
 
                 rb.AddForce(new Vector3(Speed * 0.5f, 0f, 0f), ForceMode.Force);
 
+                CameraFollow camFollow = Camera.main.GetComponent<CameraFollow>();
+                camFollow.SetTarget(insCube.transform);
+
+
 
                 if ((insCubeOriginalY - insCube.transform.position.y) > 0.5f )
                 {
