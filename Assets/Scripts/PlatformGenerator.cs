@@ -87,7 +87,7 @@ public class PlatformGenerator : MonoBehaviour
             rb.isKinematic = false;
             rb.useGravity = true;
         }
-        rb.AddForce(new Vector3(2f,0f,0f),ForceMode.Impulse);
+        rb.AddForce(new Vector3(5f,0f,0f),ForceMode.Impulse);
 
 
        if(GameManager.Instance != null) GameManager.Instance.StartFailCheck(2f);

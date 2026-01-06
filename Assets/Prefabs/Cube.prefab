@@ -67,6 +67,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitParticlePrefab: {fileID: 195466, guid: cbd9edce014106a43b331618c37f0227, type: 3}
+  shakeDuration: 0.08
+  shakeStrength: 0.1
 --- !u!1 &6842397076012033515
 GameObject:
   m_ObjectHideFlags: 0
