@@ -13,6 +13,9 @@ public class CubeScript : MonoBehaviour
     [SerializeField] private float shakeDuration = 0.5f;
     [SerializeField] private float shakeStrength = 0.1f;
 
+    [SerializeField] private Transform redCube;  
+    [SerializeField] private float perfectTolerance = 0.1f;
+
 
 
     private void Start()
@@ -29,7 +32,7 @@ public class CubeScript : MonoBehaviour
                 StartCoroutine(LockSoundFor(0.1f));
             }
 
-
+            CheckPerfectHit(other);
             SpawnParticles(other);
             StartCoroutine(ShakeCoroutine());
             GameManager.Instance.MoveCubeAlongtheSlide();
@@ -72,5 +75,23 @@ public class CubeScript : MonoBehaviour
         }
 
         cameraObj.transform.localPosition = beforePos;
+    }
+
+
+    private void CheckPerfectHit(Collider plankCollider)
+    {
+        float plankRightX = plankCollider.bounds.max.x;
+        float targetCenterX = redCube.position.x;
+
+        if (Mathf.Abs(plankRightX - targetCenterX) <= perfectTolerance)
+        {
+            Debug.Log("PERFECT HIT!");
+            ShowPerfect();
+        }
+    }
+
+    void ShowPerfect()
+    {
+        Debug.Log("SHOW PERFECT ANIMATION");
     }
 }
