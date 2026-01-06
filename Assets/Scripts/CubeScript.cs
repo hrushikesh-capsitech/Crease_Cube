@@ -14,10 +14,11 @@ public class CubeScript : MonoBehaviour
     [SerializeField] private float shakeStrength = 0.1f;
 
     [SerializeField] private Transform redCube;  
-    [SerializeField] private float perfectTolerance = 0.1f;
+    [SerializeField] private float perfectTolerance = 0.4f;
 
 
-
+    private bool IsPefectHit = false;
+    private bool lockCombo = false;
     private void Start()
     {
         cameraObj = Camera.main;
@@ -33,6 +34,20 @@ public class CubeScript : MonoBehaviour
             }
 
             CheckPerfectHit(other);
+            Transform parent = gameObject.transform.parent.transform;
+            PlatformGenerator pg = parent.gameObject.GetComponent<PlatformGenerator>();
+            if (IsPefectHit && !pg.isActive)
+            {
+                ScoreManager.Instance.AddComboScore();
+                Debug.Log("Combo checked");
+               if(!lockCombo) ScoreManager.Instance.showComboPopup();
+                StartCoroutine(LockCombo(0.5f));
+            }
+            else
+            {
+                Debug.Log("Score resetted");
+                ScoreManager.Instance.ResetScore();
+            }
             SpawnParticles(other);
             StartCoroutine(ShakeCoroutine());
             GameManager.Instance.MoveCubeAlongtheSlide();
@@ -48,7 +63,13 @@ public class CubeScript : MonoBehaviour
         yield return new WaitForSeconds(sec);
         soundLocked = false;
     }
+    IEnumerator LockCombo(float sec)
+    {
+        lockCombo = true;
+        yield return new WaitForSeconds(sec);
+        lockCombo = false;
 
+    }
 
     private void SpawnParticles(Collider other)
     {
@@ -87,11 +108,15 @@ public class CubeScript : MonoBehaviour
         {
             Debug.Log("PERFECT HIT!");
             ShowPerfect();
+            return;
         }
+        IsPefectHit = false;
     }
 
     void ShowPerfect()
     {
         Debug.Log("SHOW PERFECT ANIMATION");
+        ScoreManager.Instance.showPopup();
+        IsPefectHit = true;
     }
 }

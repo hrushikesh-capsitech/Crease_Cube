@@ -12,7 +12,7 @@ public class HomeScreenUi : MonoBehaviour
         playBtn.onClick.AddListener(playGame);
         //AppManager.instance.startAnimation();
         main = Camera.main;
-        main.transform.position = new Vector3(4f, 4.1f, -6f);
+        main.transform.position = new Vector3(4f, 5.5f, -6f);
 
     }
 
