@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         CurrActiveCubeIndx = 0;
         prevActiveCubeIndx = 0;
         main  = Camera.main;
-        main.transform.position = new Vector3(4f, 3f, -6f);
+        main.transform.position = new Vector3(4f, 4.1f, -6f);
     }
 
 
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
             //main.transform.position = new Vector3(currCube.transform.position.x + 3f + tolerance, 4f, -6f);
 
-            main.transform.DOMove(new Vector3(currCube.transform.position.x + 4f + tolerance, 3f, -6f), 0.8f).SetEase(Ease.InOutSine);
+            main.transform.DOMove(new Vector3(currCube.transform.position.x + 4f + tolerance, 4.1f, -6f), 0.8f).SetEase(Ease.InOutSine);
         }
         CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.position = new Vector3(currCube.transform.position.x, 1.1f, 0f);
         CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.parent = currCube.transform;
@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
         CurrActiveCubeIndx = -1;
         prevActiveCubeIndx = -1;
 
-        main.transform.DOMove(new Vector3(4f, 3f, -6f), 0.8f);
+        main.transform.DOMove(new Vector3(4f, 4.1f, -6f), 0.8f);
 
         foreach (GameObject cube in CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes)
         {

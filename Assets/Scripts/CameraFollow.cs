@@ -5,7 +5,7 @@ public class CameraFollow : MonoBehaviour
     public Transform target;
 
     [Header("Fixed Camera Values")]
-    public float fixedY = 3f;
+    public float fixedY = 4.1f;
     public float fixedZ = -6f;
 
     [Header("Smoothness")]
