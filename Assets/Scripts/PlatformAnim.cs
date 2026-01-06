@@ -8,7 +8,7 @@ public class PlatformAnim : MonoBehaviour
     [SerializeField] private GameObject Cube;
 
     public bool readyToMove = false;
-    [SerializeField] private float Speed = 1f;
+    [SerializeField] private float Speed = 5f;
 
     private BoxCollider boxCollider;
 
@@ -24,6 +24,9 @@ public class PlatformAnim : MonoBehaviour
         if (readyToMove)
         {
             insCube.transform.position += new Vector3(0.25f, 0f, 0f);
+
+            //insCube.transform.position += Vector3.right * Speed * Time.deltaTime;
+
 
             if ((maxX.x - insCube.transform.position.x) < 0.2f)
             {
