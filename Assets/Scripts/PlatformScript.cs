@@ -10,7 +10,7 @@ public class PlatformScript : MonoBehaviour
     [SerializeField] private GameObject Cube;
 
     private bool readyToMove = false;
-    [SerializeField] private float Speed =5f;
+    [SerializeField] private float Speed = 5f;
 
     private BoxCollider boxCollider;
 
@@ -27,7 +27,9 @@ public class PlatformScript : MonoBehaviour
         if (readyToMove)
         {
             //insCube.transform.position += new Vector3(0.18f, 0f, 0f);
+
             insCube.transform.position += Vector3.right * Speed * Time.deltaTime;
+
 
             if ((CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.x + 0.1f) < insCube.transform.position.x)
             {
