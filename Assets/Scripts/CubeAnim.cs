@@ -21,7 +21,7 @@ public class CubeAnim : MonoBehaviour
         // Get contact position = closest point to cube surface
         Vector3 spawnPos = other.ClosestPoint(transform.position);
 
-        Instantiate(hitParticlePrefab, spawnPos, Quaternion.identity);
+        Instantiate(hitParticlePrefab, spawnPos, Quaternion.identity,gameObject.transform);
     }
 
 

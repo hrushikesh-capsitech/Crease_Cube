@@ -368,7 +368,9 @@ MonoBehaviour:
   SpawnPoint: {fileID: 6842397076012033515}
   growSpeed: 2
   maxHeight: 10
+  MoveSpeed: 0.12
   isActive: 0
+  isMoving: 0
 --- !u!1001 &8482455706113572581
 PrefabInstance:
   m_ObjectHideFlags: 0

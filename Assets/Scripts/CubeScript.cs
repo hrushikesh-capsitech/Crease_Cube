@@ -32,10 +32,10 @@ public class CubeScript : MonoBehaviour
                 SoundManager.Instance.PlaySound(SoundManager.Instance.plankHitClip);
                 StartCoroutine(LockSoundFor(0.1f));
             }
-
             CheckPerfectHit(other);
             Transform parent = gameObject.transform.parent.transform;
             PlatformGenerator pg = parent.gameObject.GetComponent<PlatformGenerator>();
+            pg.isMoving = false;
             if (IsPefectHit && !pg.isActive)
             {
                 ScoreManager.Instance.AddComboScore();

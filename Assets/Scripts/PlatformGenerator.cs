@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlatformGenerator : MonoBehaviour
@@ -11,7 +12,7 @@ public class PlatformGenerator : MonoBehaviour
 
     [SerializeField] private float growSpeed = 2f;
     [SerializeField] private float maxHeight = 4f;
-
+    [SerializeField] private float MoveSpeed = 1.5f;
 
 
     private Vector3 startScale;
@@ -20,15 +21,57 @@ public class PlatformGenerator : MonoBehaviour
     private Vector3 firstScale;
     private Vector3 firstPos;
     public bool isActive = true;
+
+    private bool SwitchToOpposite = false;
+    public bool isMoving = false;
+    private bool isMovingLeft = false;
+    private bool isMovingRight = false;
+    float distance = 3f;
+    float travelDis = 0f;
+    public bool isFallingCube = false;
     void Start()
     {
         startScale = PlatformPrefab.transform.localScale;
         firstPos = PlatformPrefab.transform.localPosition;
-       // PlatFormPrefabAtStart = Instantiate(PlatformPrefab);
+        // PlatFormPrefabAtStart = Instantiate(PlatformPrefab);
     }
 
     void Update()
     {
+
+        if (!isMoving)
+        {
+            StopCoroutine(leftMoveRoutine());
+            StopCoroutine(rightMoveRoutine());
+        }
+
+        if (isMoving && (isMovingLeft || isMovingRight))
+        {
+            if ((distance - travelDis) >= 0.03f)
+            {
+                Debug.Log("movement running function is acxtive");
+                travelDis += Time.deltaTime * MoveSpeed;
+               if(isMovingRight) transform.position += new Vector3(Time.deltaTime * MoveSpeed, 0f, 0f);
+                else
+                {
+                    transform.position -= new Vector3(Time.deltaTime * MoveSpeed, 0f, 0f);
+                }
+            }
+            else
+            {
+                if (isMovingRight)
+                {
+                    isMovingRight = false;
+                    StartCoroutine(leftMoveRoutine());
+                }
+                else
+                {
+                    isMovingLeft = false;
+                    StartCoroutine(rightMoveRoutine());
+                }
+            }
+
+        }
         if (!isActive || isReleased) return;
 
         if (Input.GetMouseButtonDown(0))
@@ -48,6 +91,8 @@ public class PlatformGenerator : MonoBehaviour
             isReleased = true;
             ReleasePlatform();
         }
+
+        
     }
 
     public void DisablePlatform()
@@ -114,5 +159,52 @@ public class PlatformGenerator : MonoBehaviour
             Destroy(PlatformPrefab);
         }
         PlatformPrefab = Instantiate(platFormPrefabFromAssets, platFormPrefabFromAssets.transform.position, platFormPrefabFromAssets.transform.rotation,transform);
+    }
+
+    public void moveCube()
+    {
+        isMoving = true;
+        isMovingRight = true;
+        MoveSpeed = Random.Range(1f, 2f);
+    }
+
+    IEnumerator rightMoveRoutine()
+    {
+        distance = 3f;
+        travelDis = 0f;
+        MoveSpeed = Random.Range(1f, 2f);
+        yield return new WaitForSeconds(2f);
+        isMovingRight = true;
+    }
+
+    IEnumerator leftMoveRoutine()
+    {
+         distance = 3f;
+         travelDis = 0f;
+        MoveSpeed = Random.Range(1f, 2f);
+        yield return new WaitForSeconds(2f);
+        isMovingLeft = true;
+    }
+
+    public void ActivateMovingCube()
+    {
+        Debug.Log("Falling cube is active");
+        isFallingCube = true;
+        StartCoroutine(GameOverDelayifNotMoves());
+    }
+
+    public void StopFalling()
+    {
+        StopAllCoroutines();
+    }
+
+    IEnumerator GameOverDelayifNotMoves()
+    {
+        yield return new WaitForSeconds(5f);
+            Debug.Log("Falling cube is active and the active cube is also a child");
+            gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            gameObject.GetComponent<Rigidbody>().useGravity = true;
+            yield return new WaitForSeconds(2f);
+            GameManager.Instance.GameOver();
     }
 }
