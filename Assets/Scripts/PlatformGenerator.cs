@@ -202,6 +202,9 @@ public class PlatformGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
             Debug.Log("Falling cube is active and the active cube is also a child");
+            isActive = false;
+            PlatformPrefab.tag = "Untagged";
+        PlatformPrefab.SetActive(false);
             gameObject.GetComponent<Rigidbody>().isKinematic = false;
             gameObject.GetComponent<Rigidbody>().useGravity = true;
             yield return new WaitForSeconds(2f);
