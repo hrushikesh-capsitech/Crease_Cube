@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         }
         CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.position = new Vector3(currCube.transform.position.x, 1.1f, 0f);
        CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.parent = currCube.transform;
-        currCube.GetComponent<PlatformGenerator>().ActivateMovingCube();
+        if(CurrActiveCubeIndx > 20) currCube.GetComponent<PlatformGenerator>().ActivateMovingCube();
         for (int i = 0; i< CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes.Count - 5; i++)
         {
             
