@@ -17,16 +17,12 @@ public class PlatformScript : MonoBehaviour
     private GameObject insCube;
 
     private float insCubeOriginalY;
-    void Start()
-    {
-        
-    }
+
 
     void Update()
     {
         if (readyToMove)
         {
-            //insCube.transform.position += new Vector3(0.18f, 0f, 0f);
 
             insCube.transform.position += Vector3.right * Speed * Time.deltaTime;
 

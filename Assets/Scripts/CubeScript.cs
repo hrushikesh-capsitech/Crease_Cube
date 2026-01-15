@@ -1,3 +1,4 @@
+using Firebase.Analytics;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -73,7 +74,6 @@ public class CubeScript : MonoBehaviour
 
     private void SpawnParticles(Collider other)
     {
-        // Get contact position = closest point to cube surface
         Vector3 spawnPos = other.ClosestPoint(transform.position);
 
         Instantiate(hitParticlePrefab, spawnPos, Quaternion.identity,gameObject.transform);
@@ -118,5 +118,7 @@ public class CubeScript : MonoBehaviour
         Debug.Log("SHOW PERFECT ANIMATION");
         ScoreManager.Instance.showPopup();
         IsPefectHit = true;
+        //FirebaseAnalytics.LogEvent("perfect_hit");
+
     }
 }

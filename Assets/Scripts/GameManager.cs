@@ -1,6 +1,7 @@
-using UnityEngine;
 using DG.Tweening;
+using Firebase.Analytics;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -30,6 +31,11 @@ public class GameManager : MonoBehaviour
         prevActiveCubeIndx = 0;
         main  = Camera.main;
         main.transform.position = new Vector3(4f, 5.5f, -6f);
+
+        //FirebaseAnalytics.LogEvent("game_start");
+
+        StartCoroutine(WaitForFirebase());
+
     }
 
 
@@ -58,7 +64,6 @@ public class GameManager : MonoBehaviour
         {
             currCube.GetComponent<PlatformGenerator>().isActive = true;
 
-            //main.transform.position = new Vector3(currCube.transform.position.x + 3f + tolerance, 4f, -6f);
 
             main.transform.DOMove(new Vector3(currCube.transform.position.x + 4f + tolerance, 5.5f, -6f), 0.8f).SetEase(Ease.InOutSine);
         }
@@ -90,6 +95,15 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         AppStateManager.Instance.SetGameOver();
         GameOverScore.Instance.GameOverScores();
+
+        if (FireBaseManager.IsFirebaseReady)
+        {
+            FirebaseAnalytics.LogEvent("game_over", new Parameter[]
+            {
+            new Parameter("score", ScoreManager.Instance.score)
+            });
+        }
+
     }
 
     public void StartFailCheck(float delay)
@@ -148,6 +162,15 @@ public class GameManager : MonoBehaviour
         CurrActiveCubeIndx = 0;
         prevActiveCubeIndx = 0;
 
+    }
+
+
+    IEnumerator WaitForFirebase()
+    {
+        while (!FireBaseManager.IsFirebaseReady)
+            yield return null;
+
+        FirebaseAnalytics.LogEvent("game_start");
     }
 
 

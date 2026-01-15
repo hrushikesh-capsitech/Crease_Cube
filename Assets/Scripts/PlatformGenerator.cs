@@ -1,3 +1,4 @@
+using Firebase.Analytics;
 using UnityEngine;
 
 public class PlatformGenerator : MonoBehaviour
@@ -89,8 +90,13 @@ public class PlatformGenerator : MonoBehaviour
         }
         rb.AddForce(new Vector3(5f,0f,0f),ForceMode.Impulse);
 
+        if (FireBaseManager.IsFirebaseReady)
+        {
+            FirebaseAnalytics.LogEvent("plank_released");
+        }
 
-       if(GameManager.Instance != null) GameManager.Instance.StartFailCheck(2f);
+
+        if (GameManager.Instance != null) GameManager.Instance.StartFailCheck(2f);
 
     }
 
