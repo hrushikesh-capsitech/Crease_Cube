@@ -16,9 +16,12 @@ public class CubeSpawner : MonoBehaviour
     public List<GameObject> spawnedCubes = new List<GameObject>();
 
     public GameObject ActiveCube;
+    public int Count = 0;
+
     void Start()
     {
         Instance = this;
+        Count = 0;
     }
 
     public void SpawnFirstPos()
@@ -35,7 +38,8 @@ public class CubeSpawner : MonoBehaviour
     {
         if (cubePrefab == null)
             return;
- 
+
+        Count++;
         float minX = 2f;
  
         if (spawnedCubes.Count > 0)
@@ -50,7 +54,22 @@ public class CubeSpawner : MonoBehaviour
         Vector3 spawnPosition = new Vector3(Random.Range(minX, maxX), 0f, 0f);
  
         GameObject newCube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity,transform);
- 
+        if(Count > 3)
+        {
+            int isMoveOrNot = 0;
+
+            if (Count % 3 == 0) isMoveOrNot = 2;
+            else
+            {
+                isMoveOrNot = 0;
+            }
+                Debug.Log("Movement is activated");
+            if(isMoveOrNot > 1)
+            {
+                newCube.GetComponent<PlatformGenerator>().isMoving = true;
+                newCube.GetComponent<PlatformGenerator>().moveCube();
+            }
+        }
         spawnedCubes.Add(newCube);
     }
    

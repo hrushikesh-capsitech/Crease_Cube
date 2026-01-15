@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
         CurrActiveCubeIndx++;
         GameObject currCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
 
+        
 
         if (CubeSpawner.GetComponent<CubeSpawner>() != null)
         {
@@ -68,7 +69,8 @@ public class GameManager : MonoBehaviour
             main.transform.DOMove(new Vector3(currCube.transform.position.x + 4f + tolerance, 5.5f, -6f), 0.8f).SetEase(Ease.InOutSine);
         }
         CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.position = new Vector3(currCube.transform.position.x, 1.1f, 0f);
-        CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.parent = currCube.transform;
+       CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.parent = currCube.transform;
+        if(CurrActiveCubeIndx > 20) currCube.GetComponent<PlatformGenerator>().ActivateMovingCube();
         for (int i = 0; i< CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes.Count - 5; i++)
         {
             
@@ -79,6 +81,7 @@ public class GameManager : MonoBehaviour
     public void MoveCubeAlongtheSlide()
     {
         GameObject prevCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
+        prevCube.GetComponent<PlatformGenerator>().StopFalling();
         PlatformScript pc = prevCube.GetComponent<PlatformGenerator>()
            .PlatformPrefab.GetComponent<PlatformScript>();
         if (pc != null)
@@ -123,6 +126,8 @@ public class GameManager : MonoBehaviour
        HingeJoint hg = prevCube.GetComponent<PlatformGenerator>()
            .PlatformPrefab.GetComponent<HingeJoint>();
 
+        prevCube.GetComponent<PlatformGenerator>()
+           .PlatformPrefab.gameObject.tag = "Untagged";
         Destroy(hg);
 
         yield return new WaitForSeconds(1f);
@@ -155,9 +160,12 @@ public class GameManager : MonoBehaviour
             Destroy(cube);
         }
 
+
+        CubeSpawner.GetComponent<CubeSpawner>().Count = 0;
         CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes.Clear();
 
         CubeSpawner.GetComponent<CubeSpawner>().SpawnFirstPos();
+      
 
         CurrActiveCubeIndx = 0;
         prevActiveCubeIndx = 0;
