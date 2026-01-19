@@ -57,19 +57,22 @@ public class GameManager : MonoBehaviour
         
         if (CubeSpawner.GetComponent<CubeSpawner>() != null)
         {
-            currCube.GetComponent<PlatformGenerator>().isActive = true;
+            if(!currCube.GetComponent<PlatformGenerator>().SwitchToOpposite) currCube.GetComponent<PlatformGenerator>().isActive = true;
+            currCube.GetComponent<PlatformGenerator>().isMoving = false;
 
             //main.transform.position = new Vector3(currCube.transform.position.x + 3f + tolerance, 4f, -6f);
-
-            main.transform.DOMove(new Vector3(currCube.transform.position.x + 4f + tolerance, 5.5f, -6f), 0.8f).SetEase(Ease.InOutSine);
+            bool IsShiftedDirection = currCube.GetComponent<PlatformGenerator>().SwitchToOpposite;
+            main.transform.DOMove(new Vector3(!IsShiftedDirection ? currCube.transform.position.x + 4f + tolerance :currCube.transform.position.x, 5.5f,
+                !IsShiftedDirection ? -6f + currCube.transform.position.z : currCube.transform.position.z / 3 + tolerance),
+               0.8f).SetEase(Ease.InOutSine);
         }
-        CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.position = new Vector3(currCube.transform.position.x, 1.1f, 0f);
+        CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.position = new Vector3(currCube.transform.position.x, 1.1f, currCube.transform.position.z);
        CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.parent = currCube.transform;
         if(CurrActiveCubeIndx > 20) currCube.GetComponent<PlatformGenerator>().ActivateMovingCube();
         for (int i = 0; i< CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes.Count - 5; i++)
         {
             
-                Destroy(CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[i]);
+                Destroy(CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[i]); 
             
         }
     }
@@ -79,9 +82,11 @@ public class GameManager : MonoBehaviour
         prevCube.GetComponent<PlatformGenerator>().StopFalling();
         PlatformScript pc = prevCube.GetComponent<PlatformGenerator>()
            .PlatformPrefab.GetComponent<PlatformScript>();
+
+        GameObject nextCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx + 1];
         if (pc != null)
         {
-            pc.MoveCubeAlongLen();
+            pc.MoveCubeAlongLen(nextCube);
         }
         
     }
@@ -156,6 +161,14 @@ public class GameManager : MonoBehaviour
         CurrActiveCubeIndx = 0;
         prevActiveCubeIndx = 0;
 
+    }
+
+    public void retryBtnOnClick()
+    {
+        GameObject prevCube = CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.parent.gameObject;
+        prevCube.GetComponent<PlatformGenerator>().ResetPlatform();
+        AppStateManager.Instance.SetGameplay();
+        Time.timeScale = 1f;
     }
 
 

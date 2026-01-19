@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlatformGenerator : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PlatformGenerator : MonoBehaviour
     [SerializeField] private float growSpeed = 2f;
     [SerializeField] private float maxHeight = 4f;
     [SerializeField] private float MoveSpeed = 1.5f;
+    [SerializeField] private GameObject BridgeParent;
 
 
     private Vector3 startScale;
@@ -22,22 +24,31 @@ public class PlatformGenerator : MonoBehaviour
     private Vector3 firstPos;
     public bool isActive = true;
 
-    private bool SwitchToOpposite = false;
+    public bool SwitchToOpposite = false;
     public bool isMoving = false;
+    public bool isMovingUp = false;
     private bool isMovingLeft = false;
     private bool isMovingRight = false;
     float distance = 3f;
     float travelDis = 0f;
     public bool isFallingCube = false;
+    private Vector3 spawnPos;
+    private float direction = 0f;
+    public bool isShiftToOriginal = false;
+    private bool isRotated = false;
     void Start()
     {
         startScale = PlatformPrefab.transform.localScale;
         firstPos = PlatformPrefab.transform.localPosition;
         // PlatFormPrefabAtStart = Instantiate(PlatformPrefab);
+       // SpawnPoint.transform.localPosition = PlatformPrefab.transform.localPosition;
+       spawnPos = PlatformPrefab.transform.position;
     }
 
     void Update()
     {
+
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
         if (!isMoving)
         {
@@ -72,12 +83,34 @@ public class PlatformGenerator : MonoBehaviour
             }
 
         }
+
+        if (SwitchToOpposite)
+        {
+            if(!isRotated) transform.Rotate(0f, -MoveSpeed / 2 * Time.deltaTime, 0f);
+
+            if((transform.rotation.y - 90f) <= 1f)
+            {
+              if(!isRotated)  transform.Rotate(0f, -90f, 0f);
+                SwitchToOpposite = false;
+               if(CubeSpawner.Instance.ActiveCube.transform.parent == this.transform) isActive = true;
+                isRotated = true;
+            }
+        }
+
+        if (isShiftToOriginal)
+        {
+            transform.Rotate(0f, 90f, 0f);
+            isShiftToOriginal = false;
+        }
+
         if (!isActive || isReleased) return;
 
         if (Input.GetMouseButtonDown(0))
         {
                 isGrowing = true;
         }
+
+        
 
         if (isGrowing)
         {
@@ -91,7 +124,7 @@ public class PlatformGenerator : MonoBehaviour
             isReleased = true;
             ReleasePlatform();
         }
-
+       
         
     }
 
@@ -103,6 +136,7 @@ public class PlatformGenerator : MonoBehaviour
 
     public void GrowPlatFormSize()
     {
+        PlatformPrefab.SetActive(true);
         float delta = growSpeed * Time.deltaTime;
 
         float newHeight = PlatformPrefab.transform.localScale.y + delta;
@@ -116,7 +150,7 @@ public class PlatformGenerator : MonoBehaviour
             PlatformPrefab.transform.localScale.z
         );
 
-        PlatformPrefab.transform.position += Vector3.up * (heightChange / 1.3f);
+        PlatformPrefab.transform.localPosition += Vector3.up * (heightChange / 2f);
     }
 
     public void ReleasePlatform()
@@ -132,10 +166,11 @@ public class PlatformGenerator : MonoBehaviour
             rb.isKinematic = false;
             rb.useGravity = true;
         }
-        rb.AddForce(new Vector3(5f,0f,0f),ForceMode.Impulse);
+       if(!SwitchToOpposite) rb.AddForce(new Vector3(5f,0f,0f),ForceMode.Impulse);
+        else rb.AddForce(new Vector3(10f, 5f, 0f), ForceMode.Impulse);
 
 
-       if(GameManager.Instance != null) GameManager.Instance.StartFailCheck(2f);
+        if (GameManager.Instance != null) GameManager.Instance.StartFailCheck(2f);
 
     }
 
@@ -158,7 +193,10 @@ public class PlatformGenerator : MonoBehaviour
         {
             Destroy(PlatformPrefab);
         }
-        PlatformPrefab = Instantiate(platFormPrefabFromAssets, platFormPrefabFromAssets.transform.position, platFormPrefabFromAssets.transform.rotation,transform);
+        PlatformPrefab = Instantiate(platFormPrefabFromAssets, spawnPos, platFormPrefabFromAssets.transform.rotation,BridgeParent.transform);
+        PlatformPrefab.tag = "platform";
+        PlatformPrefab.SetActive(false);
+        isReleased = false;
     }
 
     public void moveCube()

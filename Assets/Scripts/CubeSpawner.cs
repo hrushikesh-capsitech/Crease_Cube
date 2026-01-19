@@ -34,14 +34,21 @@ public class CubeSpawner : MonoBehaviour
         newCube.GetComponent<PlatformGenerator>().isActive = true;
         SpawnCube();
     }
- public void SpawnCube()
+    public void SpawnCube()
     {
         if (cubePrefab == null)
             return;
 
         Count++;
         float minX = 2f;
- 
+
+
+        int val = Random.Range(0, 10);
+        if(Count > 10 && (val > 5))
+        {
+            spawnCubeZ();
+            return;
+        }
         if (spawnedCubes.Count > 0)
         {
  
@@ -51,10 +58,13 @@ public class CubeSpawner : MonoBehaviour
  
         float maxX = minX + 3f;
  
-        Vector3 spawnPosition = new Vector3(Random.Range(minX, maxX), 0f, 0f);
+        Vector3 spawnPosition = new Vector3(Random.Range(minX, maxX), 0f, spawnedCubes[spawnedCubes.Count - 1].transform.position.z);
  
         GameObject newCube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity,transform);
-        if(Count > 3)
+            PlatformGenerator pg = spawnedCubes[spawnedCubes.Count - 1].GetComponent<PlatformGenerator>();
+         if(pg.gameObject.transform.rotation.y != 0f) pg.isShiftToOriginal = true;
+            pg.PlatformPrefab.GetComponent<PlatformScript>().changeDirection = false;
+        if (Count > 3)
         {
             int isMoveOrNot = 0;
 
@@ -71,6 +81,35 @@ public class CubeSpawner : MonoBehaviour
             }
         }
         spawnedCubes.Add(newCube);
+    }
+
+    public void spawnCubeZ()
+    {
+        float minX = 2f;
+        float minZ = 2f;
+
+        if (spawnedCubes.Count > 0)
+        {
+
+            minX = spawnedCubes[spawnedCubes.Count - 1].transform.position.x;
+            minZ += spawnedCubes[spawnedCubes.Count - 1].transform.position.z;
+
+        }
+
+        float maxX = minX + 3f;
+        float maxZ = minZ + 3f;
+
+        Vector3 spawnPosition = new Vector3(minX, 0f, Random.Range(minZ, maxZ));
+        GameObject newCube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity, transform);
+        PlatformGenerator pg = spawnedCubes[spawnedCubes.Count - 1].GetComponent<PlatformGenerator>();
+        if (!pg.PlatformPrefab.GetComponent<PlatformScript>().changeDirection)
+        {
+            Debug.Log("The platform direction is changed");
+            pg.SwitchToOpposite = true;
+        }
+        spawnedCubes[spawnedCubes.Count - 1].GetComponent<PlatformGenerator>().PlatformPrefab.GetComponent<PlatformScript>().changeDirection = true;
+        newCube.GetComponent<PlatformGenerator>().SwitchToOpposite = true;
+        spawnedCubes.Add(newCube);          
     }
    
 }

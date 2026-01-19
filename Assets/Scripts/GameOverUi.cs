@@ -7,21 +7,23 @@ public class GameOverUi : MonoBehaviour
 
     [SerializeField] private Button restartBtn;
     [SerializeField] private Button HomeBtn;
+    [SerializeField] private Button continueBtn;
     void Start()
     {
         restartBtn.onClick.AddListener(restart);
         HomeBtn.onClick.AddListener(Home);
+        continueBtn.onClick.AddListener(continueFromEnd);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Home()
     {
-        
+
         Time.timeScale = 1.0f;
 
         AppManager.instance.ExitGame();
@@ -32,5 +34,10 @@ public class GameOverUi : MonoBehaviour
     public void restart()
     {
         GameManager.Instance.RestartGame();
+    }
+
+    public void continueFromEnd()
+    {
+        GameManager.Instance.retryBtnOnClick();
     }
 }

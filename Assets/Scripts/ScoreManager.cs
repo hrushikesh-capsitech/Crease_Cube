@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TMP_Text PerfectScorePopup;
     [SerializeField] private TMP_Text ComboPopup;
+    [SerializeField] private Button SkipBtn;
 
     public int ComboScore = 0;
     public int score;
@@ -16,6 +18,7 @@ public class ScoreManager : MonoBehaviour
     {
         Instance = this;
         ComboScore = 0;
+        SkipBtn.onClick.AddListener(JumpToNextCube);
     }
 
     
@@ -65,5 +68,10 @@ public class ScoreManager : MonoBehaviour
         ComboPopup.text = "COMBO " + ComboScore + "x";
         yield return new WaitForSeconds(1f);
         ComboPopup.gameObject.SetActive(false);
+    }
+
+    private void JumpToNextCube()
+    {
+        GameManager.Instance.MoveToNextCube();
     }
 }

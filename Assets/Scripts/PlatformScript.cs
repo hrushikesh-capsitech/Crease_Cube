@@ -17,6 +17,8 @@ public class PlatformScript : MonoBehaviour
     private GameObject insCube;
 
     private float insCubeOriginalY;
+
+    public bool changeDirection = false;
     void Start()
     {
         
@@ -27,11 +29,12 @@ public class PlatformScript : MonoBehaviour
         if (readyToMove)
         {
             //insCube.transform.position += new Vector3(0.18f, 0f, 0f);
+            insCube.transform.localPosition += Speed * Time.deltaTime * (!changeDirection ? Vector3.right : new Vector3(0, 0, 1));
 
-            insCube.transform.position += Vector3.right * Speed * Time.deltaTime;
 
-
-            if ((CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.x + 0.1f) < insCube.transform.position.x)
+            if (((!changeDirection ? CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.x + 0.1f
+                : CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.z) + 0.1f) < 
+                (!changeDirection ?  insCube.transform.position.x : insCube.transform.position.z))
             {
                 insCube.AddComponent<Rigidbody>();
                 Rigidbody rb = insCube.GetComponent<Rigidbody>();
@@ -51,9 +54,11 @@ public class PlatformScript : MonoBehaviour
             }
 
 
-            if (maxX.x <= CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.x)
+            if ((!changeDirection ? maxX.x : maxX.z) <= (!changeDirection ? CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.x 
+                : CubeSpawner.Instance.spawnedCubes[GameManager.Instance.CurrActiveCubeIndx + 1].GetComponent<PlatformGenerator>().SpawnPoint.transform.position.z))
             {
-                if ((maxX.x - insCube.transform.position.x) < 0.1f)
+                if (((!changeDirection ? maxX.x : maxX.z) - (!changeDirection ? insCube.transform.position.x 
+                    : insCube.transform.position.z) < 0.1f))
                 {
                     readyToMove = false;
 
@@ -64,7 +69,7 @@ public class PlatformScript : MonoBehaviour
         }
     }
      
-    public void MoveCubeAlongLen()
+    public void MoveCubeAlongLen(GameObject cube)
     {
         boxCollider  = gameObject.GetComponent<BoxCollider>();
         Bounds bounds = boxCollider.bounds;
@@ -74,13 +79,16 @@ public class PlatformScript : MonoBehaviour
         if(CubeSpawner.Instance.ActiveCube != null)
         {
             insCube = CubeSpawner.Instance.ActiveCube;
-            insCube.transform.position = new Vector3(bounds.min.x, bounds.min.y + 0.46f, 0f);
+            insCube.transform.position = new Vector3(bounds.min.x, bounds.min.y + 0.46f, bounds.min.z);
 
             insCubeOriginalY = insCube.transform.position.y;
         }
-        //Invoke(nameof(readyFunc), 0.1f);
-
-        readyToMove = true;
+        if (cube.GetComponent<PlatformGenerator>().isMovingUp)
+        {
+            changeDirection = true;
+        }
+        Invoke(nameof(readyFunc), 0.1f);
+        insCube.transform.parent = null;
     }
 
     void readyFunc()

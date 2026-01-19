@@ -16,6 +16,7 @@ public class CubeSpawnerAnim : MonoBehaviour
     private Vector3 secondCubePos;
     private bool isMoving = false;
     [SerializeField] private GameObject cubeMovePrefab;
+    public bool isActive = false;
 
 
     public List<GameObject> spawnedCubes = new List<GameObject>();
@@ -29,10 +30,11 @@ public class CubeSpawnerAnim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isActive) return;
         if (isMoving)
         {
             secondCube.transform.position += new Vector3(-0.07f, 0f, 0f);
-            if ((secondCube.transform.position.x - firstCubePos.x) < 0.2f)
+            if ((secondCube.transform.position.x - firstCubePos.x) < 0.1f)
             {
                 isMoving = false;
                 firstCube.GetComponent<PlatformGenerator>().PlatformPrefab.SetActive(false);
@@ -57,7 +59,7 @@ public class CubeSpawnerAnim : MonoBehaviour
             yield return new WaitForSeconds(0.6f);
 
             secondCube.GetComponent<PlatformGenerator>().PlatformPrefab.SetActive(true);
-            secondCube.GetComponent<PlatformGenerator>().SpawnForAnim(1f);
+            secondCube.GetComponent<PlatformGenerator>().SpawnForAnim(1.6f);
             GameObject temp = firstCube;
             firstCube = secondCube;
             secondCube = temp;
@@ -74,11 +76,11 @@ public class CubeSpawnerAnim : MonoBehaviour
 
         secondCube = newCube;
         secondCubePos = secondCube.transform.position;
-        GameObject cube = Instantiate(cubeMovePrefab, new Vector3(-0.15f, 1.95f, 0f), Quaternion.identity);
+        GameObject cube = Instantiate(cubeMovePrefab, new Vector3(-0.20f, 1.95f, 0f), Quaternion.identity);
         ActiveCube = cube;
         ActiveCube.transform.parent = firstCube.transform;
         firstCube.GetComponent<PlatformGenerator>().PlatformPrefab.SetActive(true);
-        firstCube.GetComponent<PlatformGenerator>().SpawnForAnim(1f);
+        firstCube.GetComponent<PlatformGenerator>().SpawnForAnim(1.6f);
 
     }
 

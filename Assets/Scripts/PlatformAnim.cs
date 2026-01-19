@@ -28,11 +28,12 @@ public class PlatformAnim : MonoBehaviour
             //insCube.transform.position += Vector3.right * Speed * Time.deltaTime;
 
 
-            if ((maxX.x - insCube.transform.position.x) < 0.2f)
+            if ((maxX.x - insCube.transform.position.x) < 0.1f)
             {
                 readyToMove = false;
 
                 Debug.Log("Moved through the slide");
+                insCube.transform.position = new Vector3(maxX.x - 0.15f, 1.95f, 0f);
                 CubeSpawnerAnim.Instance.moveToNextPart();
             }
         }
