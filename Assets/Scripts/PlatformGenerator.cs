@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlatformGenerator : MonoBehaviour
@@ -47,31 +47,34 @@ public class PlatformGenerator : MonoBehaviour
 
         if (isMoving && (isMovingLeft || isMovingRight))
         {
-            if ((distance - travelDis) >= 0.03f)
+            if ((distance - travelDis) >= 0.01f)
             {
-                Debug.Log("movement running function is acxtive");
                 travelDis += Time.deltaTime * MoveSpeed;
-               if(isMovingRight) transform.position += new Vector3(Time.deltaTime * MoveSpeed, 0f, 0f);
-                else
-                {
-                    transform.position -= new Vector3(Time.deltaTime * MoveSpeed, 0f, 0f);
-                }
+
+                
+                if (isMovingRight)
+                    transform.position += Vector3.forward * Time.deltaTime * MoveSpeed;  
+                else if (isMovingLeft)
+                    transform.position += Vector3.back * Time.deltaTime * MoveSpeed;    
             }
             else
             {
+                travelDis = 0f;
+
                 if (isMovingRight)
                 {
                     isMovingRight = false;
                     StartCoroutine(leftMoveRoutine());
                 }
-                else
+                else if (isMovingLeft)
                 {
                     isMovingLeft = false;
                     StartCoroutine(rightMoveRoutine());
                 }
             }
-
         }
+
+
         if (!isActive || isReleased) return;
 
         if (Input.GetMouseButtonDown(0))
@@ -170,21 +173,39 @@ public class PlatformGenerator : MonoBehaviour
 
     IEnumerator rightMoveRoutine()
     {
-        distance = 3f;
+        
+        isMovingRight = false;
+        isMovingLeft = false;
+
         travelDis = 0f;
-        MoveSpeed = Random.Range(1f, 2f);
-        yield return new WaitForSeconds(2f);
+        MoveSpeed = Random.Range(2f, 4f);
+        distance = 2f;
+
+        
+        yield return new WaitForSeconds(0.5f); 
+
+        
         isMovingRight = true;
     }
 
     IEnumerator leftMoveRoutine()
     {
-         distance = 3f;
-         travelDis = 0f;
-        MoveSpeed = Random.Range(1f, 2f);
-        yield return new WaitForSeconds(2f);
+        
+        isMovingRight = false;
+        isMovingLeft = false;
+
+        travelDis = 0f;
+        MoveSpeed = Random.Range(2f, 4f);
+        distance = 3f;
+
+       
+        yield return new WaitForSeconds(0.5f); 
+
+        
         isMovingLeft = true;
     }
+
+
 
     public void ActivateMovingCube()
     {
