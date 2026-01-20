@@ -96,6 +96,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game Over");
         Time.timeScale = 0f;
+        
+        AdMobManager.Instance.ShowInterstitial();
+        AdMobManager.Instance.LoadInterstitial();
+
         AppStateManager.Instance.SetGameOver();
         GameOverScore.Instance.GameOverScores();
 
