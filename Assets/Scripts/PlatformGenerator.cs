@@ -35,7 +35,7 @@ public class PlatformGenerator : MonoBehaviour
     private Vector3 spawnPos;
     private float direction = 0f;
     public bool isShiftToOriginal = false;
-    private bool isRotated = false;
+    [SerializeField] private bool isRotated = false;
     void Start()
     {
         startScale = PlatformPrefab.transform.localScale;
@@ -101,6 +101,7 @@ public class PlatformGenerator : MonoBehaviour
         {
             transform.Rotate(0f, 90f, 0f);
             isShiftToOriginal = false;
+            isRotated = false;
         }
 
         if (!isActive || isReleased) return;
@@ -166,8 +167,8 @@ public class PlatformGenerator : MonoBehaviour
             rb.isKinematic = false;
             rb.useGravity = true;
         }
-       if(!SwitchToOpposite) rb.AddForce(new Vector3(5f,0f,0f),ForceMode.Impulse);
-        else rb.AddForce(new Vector3(10f, 5f, 0f), ForceMode.Impulse);
+       if(!isRotated) rb.AddForce(new Vector3(5f,0f,0f),ForceMode.Impulse);
+        else rb.AddForce(new Vector3(0f, 0f, 5f), ForceMode.Impulse);
 
 
         if (GameManager.Instance != null) GameManager.Instance.StartFailCheck(2f);
