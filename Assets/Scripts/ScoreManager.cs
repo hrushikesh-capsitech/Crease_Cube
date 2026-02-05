@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static AdMobManager;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class ScoreManager : MonoBehaviour
     {
         Instance = this;
         ComboScore = 0;
-        SkipBtn.onClick.AddListener(JumpToNextCube);
+        SkipBtn.onClick.AddListener(OnSkipButtonClicked);
         int startScore = PlayerPrefs.GetInt("CurrentScore", 0);
         score = startScore;
         PlayerPrefs.SetInt("CurrentScore", 0);
@@ -73,7 +74,12 @@ public class ScoreManager : MonoBehaviour
         ComboPopup.gameObject.SetActive(false);
     }
 
-    private void JumpToNextCube()
+    private void OnSkipButtonClicked()
+    {
+        AdMobManager.Instance.ShowRewardedAd(RewardAction.SkipToNextCube);
+    }
+
+    public void ExecuteJumpToNextCube()
     {
         GameObject insCube = CubeSpawner.Instance.ActiveCube;
         if (insCube.transform.parent == null) return;
