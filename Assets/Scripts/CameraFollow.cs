@@ -1,4 +1,7 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -18,7 +21,7 @@ public class CameraFollow : MonoBehaviour
         Vector3 desiredPos = new Vector3(
             target.position.x,
             fixedY,
-            fixedZ
+            (fixedZ + target.transform.position.z)
         );
 
         transform.position = Vector3.Lerp(

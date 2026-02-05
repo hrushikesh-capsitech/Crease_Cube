@@ -48,6 +48,7 @@ public class PlatformScript : MonoBehaviour
 
                 if ((insCubeOriginalY - insCube.transform.position.y) > 0.5f )
                 {
+                    readyToMove = false;
                     Invoke(nameof(gameOverFunc), 0.5f);
                 }
 
@@ -98,7 +99,6 @@ public class PlatformScript : MonoBehaviour
 
     void gameOverFunc()
     {
-        readyToMove = false;
         GameManager.Instance.GameOver();
     }
 }
