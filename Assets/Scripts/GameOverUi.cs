@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static AdMobManager;
 
 public class GameOverUi : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class GameOverUi : MonoBehaviour
     {
         restartBtn.onClick.AddListener(restart);
         HomeBtn.onClick.AddListener(Home);
-        continueBtn.onClick.AddListener(continueFromEnd);
+        continueBtn.onClick.AddListener(OnRetryButtonClicked);
     }
 
     // Update is called once per frame
@@ -36,8 +37,8 @@ public class GameOverUi : MonoBehaviour
         GameManager.Instance.RestartGame();
     }
 
-    public void continueFromEnd()
+    public void OnRetryButtonClicked()
     {
-        GameManager.Instance.retryBtnOnClick();
+        AdMobManager.Instance.ShowRewardedAd(RewardAction.RetryGame);
     }
 }
