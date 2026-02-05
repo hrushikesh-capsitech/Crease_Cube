@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Over");
         Time.timeScale = 0f;
         
-        Destroy(CubeSpawner.GetComponent<CubeSpawner>().ActiveCube);
+       // Destroy(CubeSpawner.GetComponent<CubeSpawner>().ActiveCube);
 
         AppStateManager.Instance.SetGameOver();
         GameOverScore.Instance.GameOverScores();
