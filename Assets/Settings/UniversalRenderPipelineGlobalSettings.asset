@@ -59,6 +59,7 @@ MonoBehaviour:
       - rid: 7409742317727776771
       - rid: 7409742317727776772
       - rid: 7409742317727776773
+<<<<<<< HEAD
       - rid: 1739462946952314975
       - rid: 1739462946952314976
       - rid: 1739462946952314977
@@ -67,6 +68,28 @@ MonoBehaviour:
       - rid: 1739462946952314980
     m_RuntimeSettings:
       m_List: []
+=======
+      - rid: 181316364243828736
+      - rid: 181316364243828737
+      - rid: 181316364243828738
+      - rid: 181316364243828739
+      - rid: 181316364243828740
+      - rid: 181316364243828741
+    m_RuntimeSettings:
+      m_List:
+      - rid: 6852985685364965378
+      - rid: 6852985685364965379
+      - rid: 6852985685364965380
+      - rid: 6852985685364965381
+      - rid: 6852985685364965384
+      - rid: 6852985685364965385
+      - rid: 6852985685364965392
+      - rid: 6852985685364965394
+      - rid: 8712630790384254976
+      - rid: 7409742317727776773
+      - rid: 181316364243828739
+      - rid: 181316364243828741
+>>>>>>> fb163354da8b6711a20df0383d6edc9da397b75a
   m_AssetVersion: 9
   m_ObsoleteDefaultVolumeProfile: {fileID: 0}
   m_RenderingLayerNames:
@@ -97,7 +120,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+<<<<<<< HEAD
     - rid: 1739462946952314975
+=======
+    - rid: 181316364243828736
+>>>>>>> fb163354da8b6711a20df0383d6edc9da397b75a
       type: {class: RayTracingRenderPipelineResources, ns: UnityEngine.Rendering.UnifiedRayTracing, asm: Unity.UnifiedRayTracing.Runtime}
       data:
         m_Version: 1
@@ -110,17 +137,29 @@ MonoBehaviour:
         m_BuildHlbvh: {fileID: 7200000, guid: 2d70cd6be91bd7843a39a54b51c15b13, type: 3}
         m_RestructureBvh: {fileID: 7200000, guid: 56641cb88dcb31a4398a4997ef7a7a8c, type: 3}
         m_Scatter: {fileID: 7200000, guid: a2eaeefdac4637a44b734e85b7be9186, type: 3}
+<<<<<<< HEAD
     - rid: 1739462946952314976
+=======
+    - rid: 181316364243828737
+>>>>>>> fb163354da8b6711a20df0383d6edc9da397b75a
       type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_Version: 0
         m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+<<<<<<< HEAD
     - rid: 1739462946952314977
+=======
+    - rid: 181316364243828738
+>>>>>>> fb163354da8b6711a20df0383d6edc9da397b75a
       type: {class: URPReflectionProbeSettings, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         version: 1
         useReflectionProbeRotation: 0
+<<<<<<< HEAD
     - rid: 1739462946952314978
+=======
+    - rid: 181316364243828739
+>>>>>>> fb163354da8b6711a20df0383d6edc9da397b75a
       type: {class: VrsRenderPipelineRuntimeResources, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}
       data:
         m_TextureComputeShader: {fileID: 7200000, guid: cacb30de6c40c7444bbc78cb0a81fd2a, type: 3}
@@ -147,11 +186,19 @@ MonoBehaviour:
           - {r: 0.8, g: 1, b: 0.8, a: 1}
           - {r: 0.2, g: 0.4, b: 0.2, a: 1}
           - {r: 0.125, g: 0.22, b: 0.36, a: 1}
+<<<<<<< HEAD
     - rid: 1739462946952314979
       type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}
       data:
         m_version: 0
     - rid: 1739462946952314980
+=======
+    - rid: 181316364243828740
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 181316364243828741
+>>>>>>> fb163354da8b6711a20df0383d6edc9da397b75a
       type: {class: LightmapSamplingSettings, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}
       data:
         m_Version: 1

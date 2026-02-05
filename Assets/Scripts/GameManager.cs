@@ -1,6 +1,7 @@
-using UnityEngine;
 using DG.Tweening;
+using Firebase.Analytics;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -30,6 +31,11 @@ public class GameManager : MonoBehaviour
         prevActiveCubeIndx = 0;
         main  = Camera.main;
         main.transform.position = new Vector3(4f, 5.5f, -6f);
+
+        //FirebaseAnalytics.LogEvent("game_start");
+
+        StartCoroutine(WaitForFirebase());
+
     }
 
 
@@ -60,11 +66,16 @@ public class GameManager : MonoBehaviour
             if(!currCube.GetComponent<PlatformGenerator>().SwitchToOpposite) currCube.GetComponent<PlatformGenerator>().isActive = true;
             currCube.GetComponent<PlatformGenerator>().isMoving = false;
 
+<<<<<<< HEAD
             //main.transform.position = new Vector3(currCube.transform.position.x + 3f + tolerance, 4f, -6f);
             bool IsShiftedDirection = currCube.GetComponent<PlatformGenerator>().SwitchToOpposite;
             main.transform.DOMove(new Vector3(!IsShiftedDirection ? currCube.transform.position.x + 4f + tolerance :currCube.transform.position.x, 5.5f,
                 !IsShiftedDirection ? -6f + currCube.transform.position.z : currCube.transform.position.z / 3 + tolerance),
                0.8f).SetEase(Ease.InOutSine);
+=======
+
+            main.transform.DOMove(new Vector3(currCube.transform.position.x + 4f + tolerance, 5.5f, -6f), 0.8f).SetEase(Ease.InOutSine);
+>>>>>>> fb163354da8b6711a20df0383d6edc9da397b75a
         }
         CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.position = new Vector3(currCube.transform.position.x, 1.1f, currCube.transform.position.z);
        CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.parent = currCube.transform;
@@ -96,8 +107,21 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game Over");
         Time.timeScale = 0f;
+        
+        AdMobManager.Instance.ShowInterstitial();
+        AdMobManager.Instance.LoadInterstitial();
+
         AppStateManager.Instance.SetGameOver();
         GameOverScore.Instance.GameOverScores();
+
+        if (FireBaseManager.IsFirebaseReady)
+        {
+            FirebaseAnalytics.LogEvent("game_over", new Parameter[]
+            {
+            new Parameter("score", ScoreManager.Instance.score)
+            });
+        }
+
     }
 
     public void StartFailCheck(float delay)
@@ -169,6 +193,15 @@ public class GameManager : MonoBehaviour
         prevCube.GetComponent<PlatformGenerator>().ResetPlatform();
         AppStateManager.Instance.SetGameplay();
         Time.timeScale = 1f;
+    }
+
+
+    IEnumerator WaitForFirebase()
+    {
+        while (!FireBaseManager.IsFirebaseReady)
+            yield return null;
+
+        FirebaseAnalytics.LogEvent("game_start");
     }
 
 

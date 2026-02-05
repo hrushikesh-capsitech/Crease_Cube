@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "428947288298",
+    "project_id": "creasecube-b7df5",
+    "storage_bucket": "creasecube-b7df5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428947288298:android:88545a32ec0aba98692793",
+        "android_client_info": {
+          "package_name": "com.thegamewise.creasecube"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJIeC5ZLl61fXIKiCCauIf2WJrHje73MA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
