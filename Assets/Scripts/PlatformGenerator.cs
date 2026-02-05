@@ -197,6 +197,10 @@ public class PlatformGenerator : MonoBehaviour
         {
             Destroy(PlatformPrefab);
         }
+        transform.position = CubeCurrPos;
+        gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        gameObject.GetComponent<Rigidbody>().useGravity = false;
+        gameObject.SetActive(true);
         PlatformPrefab = Instantiate(platFormPrefabFromAssets, spawnPos, SpawnPoint.transform.rotation,BridgeParent.transform);
         if (isRotated)
         {
@@ -205,12 +209,9 @@ public class PlatformGenerator : MonoBehaviour
         }
         PlatformPrefab.tag = "platform";
         PlatformPrefab.SetActive(false);
-        isReleased = false;
-        transform.position = CubeCurrPos;
-        gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        gameObject.GetComponent<Rigidbody>().useGravity = false;
-        gameObject.SetActive(true);
         isActive = true;
+        isReleased = false;
+        
     }
 
     public void moveCube()
