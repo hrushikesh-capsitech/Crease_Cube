@@ -99,7 +99,6 @@ public class PlatformScript : MonoBehaviour
 
     void gameOverFunc()
     {
-        
         GameManager.Instance.GameOver();
     }
 }

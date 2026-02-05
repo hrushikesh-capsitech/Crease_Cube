@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 
             bool IsShiftedDirection = currCube.GetComponent<PlatformGenerator>().SwitchToOpposite;
             main.transform.DOMove(new Vector3(!IsShiftedDirection ? currCube.transform.position.x + 4f + tolerance :currCube.transform.position.x, 5.5f,
-                !IsShiftedDirection ? -6f + currCube.transform.position.z : currCube.transform.position.z / 3 + tolerance),
+                !IsShiftedDirection ? -6f + currCube.transform.position.z : currCube.transform.position.z + tolerance - 5f),
                0.8f).SetEase(Ease.InOutSine);
 
         }
@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
             Destroy(cube);
         }
 
-
+        Destroy(CubeSpawner.GetComponent<CubeSpawner>().ActiveCube);
         CubeSpawner.GetComponent<CubeSpawner>().Count = 0;
         CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes.Clear();
 
@@ -182,12 +182,29 @@ public class GameManager : MonoBehaviour
         CurrActiveCubeIndx = 0;
         prevActiveCubeIndx = 0;
 
+        PlayerPrefs.SetInt("CurrentScore", 0);
+
     }
 
     public void retryBtnOnClick()
     {
-        GameObject prevCube = CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.parent.gameObject;
+        GameObject prevCube;
+        if (CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.parent == null)
+        {
+            prevCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
+            GameObject ActiveCube = CubeSpawner.GetComponent<CubeSpawner>().ActiveCube;
+            ActiveCube.transform.parent = prevCube.transform;
+            ActiveCube.transform.position = new Vector3(0f, 0.733f, 0f);
+            ActiveCube.GetComponent<Rigidbody>().isKinematic = true;
+            ActiveCube.GetComponent<Rigidbody>().useGravity = false;
+            ActiveCube.transform.rotation = Quaternion.identity;
+        }
+        else
+        {
+            prevCube = CubeSpawner.GetComponent<CubeSpawner>().ActiveCube.transform.parent.gameObject;
+        }        
         prevCube.GetComponent<PlatformGenerator>().ResetPlatform();
+        prevCube.GetComponent<PlatformGenerator>().resetTimer();
         AppStateManager.Instance.SetGameplay();
         Time.timeScale = 1f;
     }

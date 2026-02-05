@@ -19,7 +19,7 @@ public class PlatformGenerator : MonoBehaviour
 
     private Vector3 startScale;
     private bool isGrowing = false;
-    private bool isReleased = false;
+    public bool isReleased = false;
     private Vector3 firstScale;
     private Vector3 firstPos;
     public bool isActive = true;
@@ -35,7 +35,9 @@ public class PlatformGenerator : MonoBehaviour
     private Vector3 spawnPos;
     private float direction = 0f;
     public bool isShiftToOriginal = false;
-    private bool isRotated = false;
+    [SerializeField] private bool isRotated = false;
+
+    private Vector3 CubeCurrPos;
     void Start()
     {
         startScale = PlatformPrefab.transform.localScale;
@@ -43,6 +45,7 @@ public class PlatformGenerator : MonoBehaviour
         // PlatFormPrefabAtStart = Instantiate(PlatformPrefab);
        // SpawnPoint.transform.localPosition = PlatformPrefab.transform.localPosition;
        spawnPos = PlatformPrefab.transform.position;
+        CubeCurrPos = transform.position;
     }
 
     void Update()
@@ -101,6 +104,7 @@ public class PlatformGenerator : MonoBehaviour
         {
             transform.Rotate(0f, 90f, 0f);
             isShiftToOriginal = false;
+            isRotated = false;
         }
 
         if (!isActive || isReleased) return;
@@ -166,8 +170,8 @@ public class PlatformGenerator : MonoBehaviour
             rb.isKinematic = false;
             rb.useGravity = true;
         }
-       if(!SwitchToOpposite) rb.AddForce(new Vector3(5f,0f,0f),ForceMode.Impulse);
-        else rb.AddForce(new Vector3(10f, 5f, 0f), ForceMode.Impulse);
+       if(!isRotated) rb.AddForce(new Vector3(5f,0f,0f),ForceMode.Impulse);
+        else rb.AddForce(new Vector3(0f, 0f, 5f), ForceMode.Impulse);
 
 
         if (GameManager.Instance != null) GameManager.Instance.StartFailCheck(2f);
@@ -193,10 +197,20 @@ public class PlatformGenerator : MonoBehaviour
         {
             Destroy(PlatformPrefab);
         }
-        PlatformPrefab = Instantiate(platFormPrefabFromAssets, spawnPos, platFormPrefabFromAssets.transform.rotation,BridgeParent.transform);
+        PlatformPrefab = Instantiate(platFormPrefabFromAssets, spawnPos, SpawnPoint.transform.rotation,BridgeParent.transform);
+        if (isRotated)
+        {
+            PlatformPrefab.GetComponent<PlatformScript>().changeDirection = true;
+            PlatformPrefab.transform.position = SpawnPoint.transform.position;
+        }
         PlatformPrefab.tag = "platform";
         PlatformPrefab.SetActive(false);
         isReleased = false;
+        transform.position = CubeCurrPos;
+        gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        gameObject.GetComponent<Rigidbody>().useGravity = false;
+        gameObject.SetActive(true);
+        isActive = true;
     }
 
     public void moveCube()
@@ -236,16 +250,25 @@ public class PlatformGenerator : MonoBehaviour
         StopAllCoroutines();
     }
 
+    public void resetTimer()
+    {
+        StopFalling();
+    }
+
     IEnumerator GameOverDelayifNotMoves()
     {
         yield return new WaitForSeconds(5f);
+          if(CubeSpawner.Instance.ActiveCube.transform.parent == this.transform)
+          {
             Debug.Log("Falling cube is active and the active cube is also a child");
             isActive = false;
             PlatformPrefab.tag = "Untagged";
-        PlatformPrefab.SetActive(false);
+            PlatformPrefab.SetActive(false);
             gameObject.GetComponent<Rigidbody>().isKinematic = false;
             gameObject.GetComponent<Rigidbody>().useGravity = true;
             yield return new WaitForSeconds(2f);
             GameManager.Instance.GameOver();
+          }
+            
     }
 }

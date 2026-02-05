@@ -11,6 +11,7 @@ public class GameOverScore : MonoBehaviour
 
     private int highestScore = 0;
     private const string HighestScoreKey = "HighestScore";
+    private const string CurrentScore = "CurrentScore";
 
 
     private void Awake()
@@ -21,7 +22,7 @@ public class GameOverScore : MonoBehaviour
     public void GameOverScores()
     {
         int score = ScoreManager.Instance.score;
-
+        PlayerPrefs.SetInt(CurrentScore, score);
         highestScore = PlayerPrefs.GetInt(HighestScoreKey, 0);
 
         if (finalScoreText != null)

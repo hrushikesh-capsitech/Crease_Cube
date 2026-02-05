@@ -19,6 +19,9 @@ public class ScoreManager : MonoBehaviour
         Instance = this;
         ComboScore = 0;
         SkipBtn.onClick.AddListener(JumpToNextCube);
+        int startScore = PlayerPrefs.GetInt("CurrentScore", 0);
+        score = startScore;
+        PlayerPrefs.SetInt("CurrentScore", 0);
     }
 
     
@@ -72,6 +75,15 @@ public class ScoreManager : MonoBehaviour
 
     private void JumpToNextCube()
     {
+        GameObject insCube = CubeSpawner.Instance.ActiveCube;
+        if (insCube.transform.parent == null) return;
+
+        if (insCube.transform.parent.gameObject.GetComponent<PlatformGenerator>().isReleased)
+        {
+            return;
+
+        }
+
         GameManager.Instance.MoveToNextCube();
     }
 }
