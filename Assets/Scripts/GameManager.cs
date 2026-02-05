@@ -103,8 +103,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Over");
         Time.timeScale = 0f;
         
-        AdMobManager.Instance.ShowInterstitial();
-        AdMobManager.Instance.LoadInterstitial();
+        Destroy(CubeSpawner.GetComponent<CubeSpawner>().ActiveCube);
 
         AppStateManager.Instance.SetGameOver();
         GameOverScore.Instance.GameOverScores();
@@ -116,6 +115,9 @@ public class GameManager : MonoBehaviour
             new Parameter("score", ScoreManager.Instance.score)
             });
         }
+
+        AdMobManager.Instance.ShowInterstitial();
+        AdMobManager.Instance.LoadInterstitial();
 
     }
 

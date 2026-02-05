@@ -27,7 +27,7 @@ public class CubeSpawnerAnim : MonoBehaviour
         SpawnCube();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         if (!isActive) return;
