@@ -81,6 +81,7 @@ MonoBehaviour:
   prevActiveCubeIndx: -1
   CubeSpawner: {fileID: 8188838817511657341}
   tolerance: 0.5
+  restartButton: {fileID: 0}
 --- !u!1 &8188838817511657341
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 7798898750419196045, guid: 13d4d0dc227c6c745a1e5cea59f0f86f, type: 3}
-  cubeMovePrefab: {fileID: 6055716350852146520, guid: 0777fe7cf2d318d4182b1955337b00c9, type: 3}
+  cubeMovePrefab: {fileID: 2717401997246881258, guid: c1b51e92b98e2f04aa6338554b70190d, type: 3}
   spawnedCubes: []
   ActiveCube: {fileID: 0}
+  Count: 0

@@ -882,7 +882,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1043,7 +1043,11 @@ MonoBehaviour:
   - name: GameOverScreen
     state: 10
     prefab: {fileID: 8381626167168435928, guid: eecbeeec1b852c644bad2c5f530a8e25, type: 3}
-  overlays: []
+  overlays:
+  - key: Pause
+    prefab: {fileID: 4267943034148899638, guid: bc4c7c80dbfbe4a41b704929586b2058, type: 3}
+  - key: Settings
+    prefab: {fileID: 2155426855171182868, guid: bbf9fab43cd5f39409b402e09225ddae, type: 3}
 --- !u!4 &1187102458
 Transform:
   m_ObjectHideFlags: 0

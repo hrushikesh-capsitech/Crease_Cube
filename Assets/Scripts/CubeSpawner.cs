@@ -28,6 +28,7 @@ public class CubeSpawner : MonoBehaviour
     {
         GameObject newCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity,transform);
        GameObject cube = Instantiate(cubeMovePrefab, new Vector3(0f,1.1f,0f), Quaternion.identity,transform);
+        cube.transform.Rotate(0f, 114f, 0f);
         cube.transform.parent = newCube.transform;
         ActiveCube = cube;
         spawnedCubes.Add(newCube);
