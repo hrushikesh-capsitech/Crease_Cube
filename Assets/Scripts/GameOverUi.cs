@@ -28,7 +28,6 @@ public class GameOverUi : MonoBehaviour
         Time.timeScale = 1.0f;
 
         AppManager.instance.ExitGame();
-        AppManager.instance.startAnimation();
         AppStateManager.Instance.SetHome();
     }
 

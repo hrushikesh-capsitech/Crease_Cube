@@ -54,6 +54,7 @@ public class AppManager : MonoBehaviour
     {
         if (GameLogic == null) return;
         GameLogic.SetActive(false);
+        Destroy(CubeSpawner.Instance.ActiveCube);
         Destroy(GameLogic);
     }
 

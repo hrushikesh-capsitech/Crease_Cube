@@ -7,12 +7,14 @@ public class HomeScreenUi : MonoBehaviour
 
     [SerializeField] private Button playBtn;
     private Camera main;
+    [SerializeField] private Button SettingsBtn;
     void Start()
     {
         playBtn.onClick.AddListener(playGame);
         //AppManager.instance.startAnimation();
         main = Camera.main;
         main.transform.position = new Vector3(4f, 5.5f, -6f);
+        SettingsBtn.onClick.AddListener(onSettingsClick);
 
     }
 
@@ -28,5 +30,10 @@ public class HomeScreenUi : MonoBehaviour
         AppStateManager.Instance.SetGameplay();
         AppManager.instance.stopAnimation();
         AppManager.instance.StartGame();
+    }
+
+    void onSettingsClick()
+    {
+        AppStateManager.Instance.ShowOverlay("Settings");
     }
 }

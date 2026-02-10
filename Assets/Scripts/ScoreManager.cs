@@ -12,6 +12,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TMP_Text PerfectScorePopup;
     [SerializeField] private TMP_Text ComboPopup;
     [SerializeField] private Button SkipBtn;
+    [SerializeField] private Button PauseBtn;
 
     public int ComboScore = 0;
     public int score;
@@ -23,6 +24,7 @@ public class ScoreManager : MonoBehaviour
         int startScore = PlayerPrefs.GetInt("CurrentScore", 0);
         score = startScore;
         PlayerPrefs.SetInt("CurrentScore", 0);
+        PauseBtn.onClick.AddListener(PauseFunc);
     }
 
     
@@ -91,5 +93,10 @@ public class ScoreManager : MonoBehaviour
         }
 
         GameManager.Instance.MoveToNextCube();
+    }
+    public void PauseFunc()
+    {
+        Time.timeScale = 0f;
+        AppStateManager.Instance.ShowOverlay("Pause");
     }
 }

@@ -80,7 +80,7 @@ public class PlatformScript : MonoBehaviour
         if(CubeSpawner.Instance.ActiveCube != null)
         {
             insCube = CubeSpawner.Instance.ActiveCube;
-            insCube.transform.position = new Vector3(bounds.min.x, bounds.min.y + 0.46f, bounds.min.z);
+            insCube.transform.position = new Vector3(!changeDirection ? bounds.min.x : bounds.min.x + 0.5f, bounds.min.y + 0.46f, bounds.min.z + 0.05f);
 
             insCubeOriginalY = insCube.transform.position.y;
         }

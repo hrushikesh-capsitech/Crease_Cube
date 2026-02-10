@@ -194,10 +194,11 @@ public class GameManager : MonoBehaviour
             prevCube = CubeSpawner.GetComponent<CubeSpawner>().spawnedCubes[CurrActiveCubeIndx];
             GameObject ActiveCube = CubeSpawner.GetComponent<CubeSpawner>().ActiveCube;
             ActiveCube.transform.parent = prevCube.transform;
-            ActiveCube.transform.position = new Vector3(0f, 0.733f, 0f);
+            ActiveCube.transform.localPosition = new Vector3(0f, 0.733f, 0f);
             ActiveCube.GetComponent<Rigidbody>().isKinematic = true;
             ActiveCube.GetComponent<Rigidbody>().useGravity = false;
             ActiveCube.transform.rotation = Quaternion.identity;
+            
         }
         else
         {
@@ -206,6 +207,9 @@ public class GameManager : MonoBehaviour
         prevCube.GetComponent<PlatformGenerator>().ResetPlatform();
         prevCube.GetComponent<PlatformGenerator>().resetTimer();
         AppStateManager.Instance.SetGameplay();
+        CameraFollow camFollow = Camera.main.GetComponent<CameraFollow>();
+        camFollow.SetTarget(prevCube.transform);
+        camFollow.SetTarget(null);
         Time.timeScale = 1f;
     }
 
