@@ -30,6 +30,8 @@ public class CubeScript : MonoBehaviour
         {
             if (!soundLocked)
             {
+                Debug.Log(SoundManager.Instance);
+                Debug.Log(SoundManager.Instance.sfxSource);
                 SoundManager.Instance.PlaySound(SoundManager.Instance.plankHitClip);
                 StartCoroutine(LockSoundFor(0.1f));
             }

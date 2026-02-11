@@ -1,24 +1,70 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
 
-    public AudioSource audioSource;
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
 
     [Header("Clips")]
+    public AudioClip gameSound;
     public AudioClip plankHitClip;
-    public AudioClip cubeSlideClip;
-    public AudioClip gameOverClip;
-    public AudioClip nextCubeClip;
+
+    public bool isVolumeOn = true;
+    public bool isMusicOn = true;
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    public void PlaySound(AudioClip clip, float volume = 1f)
+    private void Start()
     {
-        audioSource.PlayOneShot(clip, volume);
+        if (isMusicOn)
+        {
+            PlayMusic();
+        }
+    }
+
+    public void PlayMusic()
+    {
+        if(isMusicOn)
+        {
+            musicSource.clip = gameSound;
+            musicSource.loop = true;
+            musicSource.Play();
+
+        }
+        else
+        {
+            StopMusic();
+        }
+        
+    }
+
+    public void StopMusic()
+    {
+        musicSource.Pause();
+    }
+
+    public void PlaySound(AudioClip clip, float volume = 1.5f)
+    {
+        if (sfxSource == null || clip == null)
+            return;
+
+        if (isVolumeOn)
+        {
+            sfxSource.PlayOneShot(clip, volume);
+        }
     }
 }

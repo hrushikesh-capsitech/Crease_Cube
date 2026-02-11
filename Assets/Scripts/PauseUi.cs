@@ -13,8 +13,6 @@ public class PauseUi : MonoBehaviour
 
     [SerializeField] private GameObject VolSlider;
     [SerializeField] private GameObject MusSlider;
-    private bool isVolumeOn = true;
-    private bool isMusicOn = true;
 
     void Start()
     {
@@ -29,25 +27,27 @@ public class PauseUi : MonoBehaviour
 
     void ToggleVolume()
     {
-        isVolumeOn = !isVolumeOn;
+        SoundManager.Instance.isVolumeOn = !SoundManager.Instance.isVolumeOn;
         UpdateVolumeUI();
 
     }
 
     void ToggleMusic()
     {
-        isMusicOn = !isMusicOn;
+        SoundManager.Instance.isMusicOn = !SoundManager.Instance.isMusicOn;
         UpdateMusicUI();
     }
 
     void UpdateVolumeUI()
     {
-        VolSlider.GetComponent<Image>().sprite = isVolumeOn ? SliderOnImage : SliderOffImage;
+        VolSlider.GetComponent<Image>().sprite = SoundManager.Instance.isVolumeOn ? SliderOnImage : SliderOffImage;
     }
 
     void UpdateMusicUI()
     {
-        MusSlider.GetComponent<Image>().sprite = isMusicOn ? SliderOnImage : SliderOffImage;
+        MusSlider.GetComponent<Image>().sprite = SoundManager.Instance.isMusicOn ? SliderOnImage : SliderOffImage;
+        SoundManager.Instance.PlayMusic();
+
     }
 
     void OnResumeClick()

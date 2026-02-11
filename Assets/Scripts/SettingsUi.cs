@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class SettingsUi : MonoBehaviour
 {
+    public static SettingsUi Instance;
+
     [SerializeField] private Button VolBtn;
     [SerializeField] private Button MusBtn;
 
@@ -12,45 +14,49 @@ public class SettingsUi : MonoBehaviour
     [SerializeField] private GameObject VolSlider;
     [SerializeField] private GameObject MusSlider;
 
-    private bool isVolumeOn = true;
-    private bool isMusicOn = true;
-
     [SerializeField] private Button PandPBtn;
     [SerializeField] private Button HomeBtn;
+
+    void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
+
         VolBtn.onClick.AddListener(ToggleVolume);
         MusBtn.onClick.AddListener(ToggleMusic);
         HomeBtn.onClick.AddListener(OnHomeClick);
+
+        UpdateVolumeUI();
+        UpdateMusicUI();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 
     void ToggleVolume()
     {
-        isVolumeOn = !isVolumeOn;
+        SoundManager.Instance.isVolumeOn = !SoundManager.Instance.isVolumeOn;
         UpdateVolumeUI();
 
     }
 
     void ToggleMusic()
     {
-        isMusicOn = !isMusicOn;
+        SoundManager.Instance.isMusicOn = !SoundManager.Instance.isMusicOn;
         UpdateMusicUI();
     }
 
     void UpdateVolumeUI()
     {
-        VolSlider.GetComponent<Image>().sprite = isVolumeOn ? SliderOnImage : SliderOffImage;
+        VolSlider.GetComponent<Image>().sprite = SoundManager.Instance.isVolumeOn ? SliderOnImage : SliderOffImage;
+
     }
 
     void UpdateMusicUI()
     {
-        MusSlider.GetComponent<Image>().sprite = isMusicOn ? SliderOnImage : SliderOffImage;
+        MusSlider.GetComponent<Image>().sprite = SoundManager.Instance.isMusicOn ? SliderOnImage : SliderOffImage;
+        SoundManager.Instance.PlayMusic();
     }
 
     void OnHomeClick()

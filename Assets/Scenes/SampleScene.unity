@@ -1113,11 +1113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6aaa22bdbd8754aa9ee3d99974a5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 689029611}
+  musicSource: {fileID: 689029611}
+  sfxSource: {fileID: 689029611}
+  gameSound: {fileID: 8300000, guid: 35967e8a4dfb1664e9b066939272c0a4, type: 3}
   plankHitClip: {fileID: 8300000, guid: b707babfd7e9af1458363be749d7e0b6, type: 3}
-  cubeSlideClip: {fileID: 0}
-  gameOverClip: {fileID: 0}
-  nextCubeClip: {fileID: 0}
 --- !u!4 &1124159616
 Transform:
   m_ObjectHideFlags: 0
