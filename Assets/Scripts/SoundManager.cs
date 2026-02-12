@@ -30,9 +30,23 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        if (isMusicOn)
+        if (PlayerPrefs.GetInt("Music") == 1)
         {
             PlayMusic();
+            isMusicOn = true;
+        }
+        else
+        {
+            isMusicOn= false;
+        }
+
+        if(PlayerPrefs.GetInt("Sound") == 1)
+        {
+            isVolumeOn = true;
+        }
+        else
+        {
+            isVolumeOn = false;
         }
     }
 
@@ -43,6 +57,7 @@ public class SoundManager : MonoBehaviour
             musicSource.clip = gameSound;
             musicSource.loop = true;
             musicSource.Play();
+            Debug.Log("im Ruuning the music block");
 
         }
         else
