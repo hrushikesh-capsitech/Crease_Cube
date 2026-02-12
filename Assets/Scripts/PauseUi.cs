@@ -28,6 +28,7 @@ public class PauseUi : MonoBehaviour
     void ToggleVolume()
     {
         SoundManager.Instance.isVolumeOn = !SoundManager.Instance.isVolumeOn;
+        PlayerPrefs.SetInt("Sound", SoundManager.Instance.isVolumeOn ? 1 : 0);
         UpdateVolumeUI();
 
     }
@@ -35,19 +36,23 @@ public class PauseUi : MonoBehaviour
     void ToggleMusic()
     {
         SoundManager.Instance.isMusicOn = !SoundManager.Instance.isMusicOn;
+        PlayerPrefs.SetInt("Music", SoundManager.Instance.isMusicOn ? 1 : 0);
+        if (SoundManager.Instance.isMusicOn) SoundManager.Instance.PlayMusic();
+        else
+        {
+            SoundManager.Instance.StopMusic();
+        }
         UpdateMusicUI();
     }
 
     void UpdateVolumeUI()
     {
-        VolSlider.GetComponent<Image>().sprite = SoundManager.Instance.isVolumeOn ? SliderOnImage : SliderOffImage;
+        VolSlider.GetComponent<Image>().sprite = PlayerPrefs.GetInt("Sound") == 1 ? SliderOnImage : SliderOffImage;
     }
 
     void UpdateMusicUI()
     {
-        MusSlider.GetComponent<Image>().sprite = SoundManager.Instance.isMusicOn ? SliderOnImage : SliderOffImage;
-        SoundManager.Instance.PlayMusic();
-
+        MusSlider.GetComponent<Image>().sprite = PlayerPrefs.GetInt("Music") == 1 ? SliderOnImage : SliderOffImage;
     }
 
     void OnResumeClick()
